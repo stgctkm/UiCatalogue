@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" >
+<head>
+  <th:block th:replace="_parts/head :: meta"/>
+  <title>共通のヘッダー</title>
+  <th:block th:replace="_parts/head :: css"/>
+</head>
+<body>
+<header th:fragment="main(title)">
+  <header>
+    <div class="px-3 py-2 text-bg-primary">
+      <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+          <span class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white fs-1" th:text="${title}">
+          </span>
+
+          <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+            <li>
+              <a href="#" th:href="@{/}" class="nav-link text-white">
+                <i class="bi bi-house-door"></i>Home
+              </a>
+            </li>
+            <li>
+              <a href="#" th:href="@{/sales-orders}" class="nav-link text-white">
+                <i class="bi bi-cart-check"></i>
+                受注
+              </a>
+            </li>
+            <li>
+              <a href="#" th:href="@{/products}" class="nav-link text-white">
+                <i class="bi bi-table"></i>
+                商品
+              </a>
+            </li>
+            <li>
+              <a href="#" th:href="@{/customers}" class="nav-link text-white">
+                <i class="bi bi-building"></i>顧客
+              </a>
+            </li>
+            <li>
+              <a href="#" th:href="@{/jewelries}" class="nav-link text-white">
+                <i class="bi bi-gem"></i>
+                ジュエリー
+              </a>
+            </li>
+            <li>
+              <a href="#" th:href="@{/shipping/search1}" class="nav-link text-white">
+                <i class="bi bi-truck"></i>
+                出荷
+              </a>
+            </li>
+            <li>
+              <a href="#" th:href="@{/sales-products}" class="nav-link text-white">
+                <i class="bi bi-bag-plus"></i>
+                販売商品
+              </a>
+            </li>
+            <li>
+              <a href="#" th:href="@{/invoices}" class="nav-link text-white">
+                <i class="bi bi-receipt"></i>
+                請求一覧
+              </a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+</header>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta th:fragment="viewport" name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>画面展開メニュー</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+</head>
+<body>
+
+
+<header th:replace="~{_parts/header :: main('UI展開メニュー')}"></header>
+
+<div class="container">
+
+  <table class="table fs-3 mt-4">
+    <thead>
+    <tr>
+      <th scope="col">メニュー</th>
+      <th scope="col">展開名</th>
+      <th scope="col">リンク</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><a th:href="@{/sales-orders}"><i class="bi bi-cart-check"></i>受注</a></td>
+      <td>検索&一覧操作 → 詳細</td>
+      <td><a href="https://www.sociomedia.co.jp/1677">RM-V 展開</a></td>
+    </tr>
+    <tr>
+      <td><a th:href="@{/customers}"><i class="bi bi-table"></i>商品</a></td>
+      <td>検索 & 詳細</td>
+      <td><a href="https://www.sociomedia.co.jp/1676">RV 展開</a></td>
+    </tr>
+    <tr>
+      <td><a th:href="@{/customers}"><i class="bi bi-building"></i>顧客</a></td>
+      <td>一覧操作 → 編集</td>
+      <td><a href="https://www.sociomedia.co.jp/1671">M-E 展開</a></td>
+    </tr>
+
+
+    <tr>
+      <td><a th:href="@{/jewelries}"><i class="bi bi-gem"></i>販売商品ジュエリー</a></td>
+      <td>一覧操作 → 詳細 → 編集 </td>
+      <td><a href="https://www.sociomedia.co.jp/1667">M-V-E 展開</a></td>
+    </tr>
+    <tr>
+      <td><a th:href="@{/shipping/search1}"><i class="bi bi-truck"></i>出荷</a></td>
+      <td>検索 → 検索 → 一覧操作 </td>
+      <td><a href="https://www.sociomedia.co.jp/1655">R-R-M 展開</a></td>
+    </tr>
+    <tr>
+      <td><a th:href="@{/sales-products}"><i class="bi bi-bag-plus"></i>販売商品</a></td>
+      <td>検索 & 一覧操作 → 編集 </td>
+      <td><a href="https://www.sociomedia.co.jp/1645">RM-E 展開</a></td>
+    </tr>
+    <tr>
+      <td><a th:href="@{/invoices}"><i class="bi bi-receipt"></i>請求</a></td>
+      <td>一覧操作 & 詳細</td>
+      <td><a href="https://www.sociomedia.co.jp/1638">MV 展開</a></td>
+    </tr>
+
+    </tbody>
+  </table>
+
+
+</div>
+
+</body>
+</html>
