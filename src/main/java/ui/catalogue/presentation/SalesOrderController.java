@@ -2,6 +2,7 @@ package ui.catalogue.presentation;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -22,7 +23,7 @@ public class SalesOrderController {
     }
 
     @GetMapping("{salesOrderId}")
-    String detail() {
+    String detail(@PathVariable String salesOrderId) {
         return "sales-orders/detail";
     }
 

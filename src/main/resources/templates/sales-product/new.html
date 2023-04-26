@@ -35,12 +35,11 @@
         <div class="col-6">
           <label for="sales-period" class="form-label">販売期間</label>
           <div class="input-group mb-3" id="sales-period">
-            <input type="date" class="form-control">
+            <label for="sales-period-from" class="form-label"></label>
+            <input type="date" class="form-control" id="sales-period-from">
             <span class="input-group-text">〜</span>
-            <input type="date" class="form-control">
-          </div>
-          <div class="invalid-feedback">
-            Please enter a valid email address for shipping updates.
+            <label for="sales-period-to" class="form-label"></label>
+            <input type="date" class="form-control" id="sales-period-to">
           </div>
         </div>
         </div>
@@ -99,6 +98,7 @@
 
       </div>
       <a th:href="@{/sales-products?(q=)}" class="btn btn-primary">登録</a>
+      <a th:href="@{/sales-products?(q=)}" class="btn btn-outline-primary">キャンセル</a>
     </form>
   </div>
 </div>
