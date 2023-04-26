@@ -19,10 +19,11 @@
           <label for="product-code" class="form-label">商品コード</label>
           <input type="text" class="form-control " name="productCode" id="product-code" value="P8971234">
         </div>
-        <div class="col-md-1">
+        <div class="col-md-2">
           <label for="sales-order-search-button" class="form-label">&nbsp;</label>
           <div class="">
             <button type="submit" class="btn btn-primary" id="sales-order-search-button">検索</button>
+            <a th:href="@{/products}" class="btn btn-outline-primary">クリア</a>
           </div>
         </div>
       </div>
@@ -109,7 +110,6 @@
              class="img-fluid rounded" alt="...">
       </div>
     </div>
-
 
   </div>
 

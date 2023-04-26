@@ -11,6 +11,7 @@
 <header th:replace="~{_parts/header :: main('検索＆一覧 → 詳細')}"></header>
 <div class="container">
 
+  <h4 class="mb-3">受注</h4>
   <form method="get" th:action="@{/sales-orders}" class="mt-3">
     <div class="mb-3 row">
       <div class="row">
@@ -32,10 +33,11 @@
           <label for="customerNameCriteria" class="form-label">顧客名称</label>
           <input type="text" class="form-control " name="customerName" id="customerNameCriteria">
         </div>
-        <div class="col-md-1">
+        <div class="col-md-2">
           <label for="sales-order-search-button" class="form-label">&nbsp;</label>
           <div class="">
             <button type="submit" class="btn btn-primary" name="q" id="sales-order-search-button">検索</button>
+            <a th:href="@{/sales-orders}" class="btn btn-outline-primary">クリア</a>
           </div>
         </div>
       </div>

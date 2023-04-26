@@ -27,10 +27,11 @@
           <label for="customerNameCriteria" class="form-label">販売商品名</label>
           <input type="text" class="form-control " name="productName" id="customerNameCriteria">
         </div>
-        <div class="col-md-1">
+        <div class="col-md-2">
           <label for="sales-order-search-button" class="form-label">&nbsp;</label>
           <div class="">
             <button type="submit" class="btn btn-primary" name="q" id="sales-order-search-button">検索</button>
+            <a th:href="@{/sales-products}" class="btn btn-outline-primary">クリア</a>
           </div>
         </div>
       </div>
