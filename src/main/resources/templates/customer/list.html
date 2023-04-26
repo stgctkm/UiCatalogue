@@ -23,6 +23,18 @@
     </tr>
     </thead>
     <tbody>
+    <tr class="align-middle" th:each="customerSummary: ${customerSummaries.list}">
+      <td class="text-center">
+        <a href="" th:href="@{|/customers/${customerSummary.customerId}|}">
+          <i class="bi bi-building" style="font-size: 1.5rem;"></i>
+        </a>
+      </td>
+      <td >
+        <a th:href="@{|/customers/${customerSummary.customerId}|}" th:text="${customerSummary.customerNumber}">7995319863</a></td>
+      <td th:text="${customerSummary.customerName.name}">アナハイム・エレクトロニクス</td>
+      <td th:text="${customerSummary.phoneNumber}">03-1234-2354</td>
+      <td class="text-center"><button class="btn btn-danger">削除</button></td>
+    </tr>
     <tr class="align-middle">
       <td class="text-center">
         <a href="" th:href="@{/customers/7995319863}">

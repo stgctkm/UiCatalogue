@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ui.catalogue.infrastructure.datasource.customer.CustomerMapper">
+
+<!--    <insert id="register">-->
+<!--        INSERT INTO 顧客.顧客 (顧客ID, 顧客番号, 顧客名, 顧客名カナ)-->
+<!--        VALUES (-->
+<!--                #{customerId.value},-->
+<!--                #{customerNumber.value},-->
+<!--                #{customer.customerName.name.value},-->
+<!--                #{customer.customerName.nameKana.value}-->
+<!--                )-->
+<!--    </insert>-->
+
+<!--    <insert id="registerContact">-->
+<!--        INSERT INTO 顧客.連絡先 (顧客ID, 都道府県, 住所, 電話番号, 担当者名)-->
+<!--        VALUES (-->
+<!--                #{customerId.value},-->
+<!--                #{customer.contact.address.prefecture},-->
+<!--                #{customer.contact.address.addressLine},-->
+<!--                #{customer.contact.phoneNumber.value},-->
+<!--                #{customer.contact.personInCharge}-->
+<!--               )-->
+<!--    </insert>-->
+
+<!--    <select id="summaries" resultType="guide.tm.domain.model.customer.CustomerSummary">-->
+<!--        SELECT-->
+<!--            顧客ID AS "customerId.value",-->
+<!--            顧客名 AS "name.value"-->
+<!--        FROM 顧客.顧客-->
+<!--    </select>-->
+
+<!--    <resultMap id="SingleAllocation" type="guide.tm.domain.model.allocation.single.SingleAllocation">-->
+<!--        <id property="singleAllocationNumber.value" column="引当番号"/>-->
+<!--        <result property="salesOrderNumber.value" column="受注番号"/>-->
+<!--        <result property="salesOrderItemNumber.value" column="受注明細番号"/>-->
+<!--        <result property="productAllocation.productCode.value" column="商品コード"/>-->
+<!--        <collection property="productAllocation.allocatedLocations.list" ofType="guide.tm.domain.model.allocation.location.AllocatedLocation">-->
+<!--            <result property="wareHouseCode.value" column="倉庫コード"/>-->
+<!--            <result property="allocatedQuantity.value" column="引当数量"/>-->
+<!--        </collection>-->
+<!--    </resultMap>-->
+
+    <resultMap id="customerId" type="ui.catalogue.domain.model.customer.identifier.CustomerId">
+        <constructor>
+            <idArg javaType="string" column="顧客ID"/>
+        </constructor>
+    </resultMap>
+
+    <resultMap id="customerNumber" type="ui.catalogue.domain.model.customer.identifier.CustomerNumber">
+        <constructor>
+            <idArg javaType="string" column="顧客番号"/>
+        </constructor>
+    </resultMap>
+
+    <resultMap id="customerName" type="ui.catalogue.domain.model.customer.identifier.CustomerName">
+        <constructor>
+            <arg javaType="string" column="顧客名"/>
+            <arg javaType="string" column="顧客名カナ"/>
+        </constructor>
+    </resultMap>
+
+    <resultMap id="phoneNumber" type="ui.catalogue.domain.model.customer.contact.phone.PhoneNumber">
+        <constructor>
+            <arg javaType="string" column="電話番号"/>
+        </constructor>
+    </resultMap>
+
+    <resultMap id="postalCode" type="ui.catalogue.domain.model.customer.contact.address.PostalCode">
+        <constructor>
+            <arg javaType="string" column="郵便番号"/>
+        </constructor>
+    </resultMap>
+
+    <resultMap id="contact" type="ui.catalogue.domain.model.customer.contact.Contact">
+        <constructor>
+            <arg resultMap="postalCode" javaType="ui.catalogue.domain.model.customer.contact.address.PostalCode"/>
+            <arg javaType="string" column="住所"/>
+            <arg javaType="string" column="建物"/>
+            <arg resultMap="phoneNumber" javaType="ui.catalogue.domain.model.customer.contact.phone.PhoneNumber"/>
+            <arg javaType="string" column="担当者名"/>
+            <arg javaType="string" column="担当部署"/>
+        </constructor>
+    </resultMap>
+
+    <resultMap id="customerSummary" type="ui.catalogue.domain.model.customer.summary.CustomerSummary">
+        <constructor>
+            <idArg resultMap="customerId" javaType="ui.catalogue.domain.model.customer.identifier.CustomerId"/>
+            <arg resultMap="customerNumber" javaType="ui.catalogue.domain.model.customer.identifier.CustomerNumber"/>
+            <arg resultMap="customerName" javaType="ui.catalogue.domain.model.customer.identifier.CustomerName"/>
+            <arg resultMap="phoneNumber" javaType="ui.catalogue.domain.model.customer.contact.phone.PhoneNumber"/>
+        </constructor>
+    </resultMap>
+
+    <select id="customerSummaries" resultMap="customerSummary">
+
+        SELECT
+            顧客.顧客ID,
+            顧客番号,
+            顧客名,
+            顧客名カナ,
+            電話番号
+        FROM 顧客.顧客
+        INNER JOIN 顧客.連絡先 ON 顧客.顧客ID = 連絡先.顧客ID
+    </select>
+
+    <!--
+    <select id="newCustomerNumber" resultType="long">
+        SELECT nextval('顧客.顧客番号')
+    </select>
+    -->
+
+    <resultMap id="customer" type="ui.catalogue.domain.model.customer.Customer">
+        <constructor>
+            <idArg resultMap="customerNumber" javaType="ui.catalogue.domain.model.customer.identifier.CustomerNumber"/>
+            <arg resultMap="customerName" javaType="ui.catalogue.domain.model.customer.identifier.CustomerName"/>
+            <arg resultMap="contact" javaType="ui.catalogue.domain.model.customer.contact.Contact"/>
+        </constructor>
+    </resultMap>
+
+    <select id="customerOf" resultMap="customer">
+        SELECT
+            顧客.顧客ID,
+            顧客.顧客番号,
+            顧客名,
+            顧客名カナ,
+            連絡先.郵便番号,
+            連絡先.住所,
+            連絡先.建物,
+            連絡先.電話番号,
+            連絡先.担当者名,
+            連絡先.担当部署
+        FROM 顧客.顧客
+        INNER JOIN 顧客.連絡先 ON 顧客.顧客ID = 連絡先.顧客ID
+        WHERE 顧客.顧客ID = #{customerId.value}
+    </select>
+</mapper>
