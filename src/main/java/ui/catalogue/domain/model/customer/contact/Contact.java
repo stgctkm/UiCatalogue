@@ -7,12 +7,12 @@ import ui.catalogue.domain.model.customer.contact.phone.PhoneNumber;
  * 連絡先
  */
 public record Contact(
-
-    PostalCode postalCode,
-    String addressLine,
-    String building,
-    PhoneNumber phoneNumber,
-    String personInCharge,
-    String division
+        Email email,
+        PostalCode postalCode,
+        String addressLine,
+        String building,
+        PhoneNumber phoneNumber,
+        String personInCharge,
+        String division
 ) {
 }

@@ -62,6 +62,13 @@
         </constructor>
     </resultMap>
 
+    <resultMap id="email" type="ui.catalogue.domain.model.customer.contact.Email">
+        <constructor>
+            <arg javaType="string" column="Eメール"/>
+        </constructor>
+    </resultMap>
+
+
     <resultMap id="phoneNumber" type="ui.catalogue.domain.model.customer.contact.phone.PhoneNumber">
         <constructor>
             <arg javaType="string" column="電話番号"/>
@@ -76,6 +83,7 @@
 
     <resultMap id="contact" type="ui.catalogue.domain.model.customer.contact.Contact">
         <constructor>
+            <arg resultMap="email" javaType="ui.catalogue.domain.model.customer.contact.Email"/>
             <arg resultMap="postalCode" javaType="ui.catalogue.domain.model.customer.contact.address.PostalCode"/>
             <arg javaType="string" column="住所"/>
             <arg javaType="string" column="建物"/>
@@ -126,6 +134,7 @@
             顧客.顧客番号,
             顧客名,
             顧客名カナ,
+            連絡先.Eメール,
             連絡先.郵便番号,
             連絡先.住所,
             連絡先.建物,
