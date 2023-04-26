@@ -11,55 +11,59 @@
 <body>
 
 
-<header th:replace="~{_parts/header :: main('UI展開メニュー')}"></header>
+<header th:replace="~{_parts/header :: main('画面遷移パターン')}"></header>
 
 <div class="container">
 
   <table class="table fs-3 mt-4">
     <thead>
     <tr>
-      <th scope="col">メニュー</th>
-      <th scope="col">展開名</th>
-      <th scope="col">リンク</th>
+      <th scope="col">パターン名</th>
+      <th scope="col">実装例</th>
+      <th scope="col" class="fs-5">参考情報へのリンク</th>
     </tr>
     </thead>
     <tbody>
     <tr>
+      <td>検索 & 一覧 → 詳細</td>
       <td><a th:href="@{/sales-orders}"><i class="bi bi-cart-check"></i>受注</a></td>
-      <td>検索&一覧操作 → 詳細</td>
-      <td><a href="https://www.sociomedia.co.jp/1677">RM-V 展開</a></td>
+      <td><a href="https://www.sociomedia.co.jp/1677" class="link-secondary fs-5">RM-V 展開</a></td>
     </tr>
     <tr>
-      <td><a th:href="@{/customers}"><i class="bi bi-table"></i>商品</a></td>
       <td>検索 & 詳細</td>
-      <td><a href="https://www.sociomedia.co.jp/1676">RV 展開</a></td>
-    </tr>
-    <tr>
-      <td><a th:href="@{/customers}"><i class="bi bi-building"></i>顧客</a></td>
-      <td>一覧操作 → 編集</td>
-      <td><a href="https://www.sociomedia.co.jp/1671">M-E 展開</a></td>
+      <td><a th:href="@{/products}"><i class="bi bi-table"></i>仕入</a></td>
+      <td><a href="https://www.sociomedia.co.jp/1676" class="link-secondary fs-5">RV 展開</a></td>
     </tr>
 
 
     <tr>
-      <td><a th:href="@{/jewelries}"><i class="bi bi-gem"></i>販売商品ジュエリー</a></td>
-      <td>一覧操作 → 詳細 → 編集 </td>
-      <td><a href="https://www.sociomedia.co.jp/1667">M-V-E 展開</a></td>
+      <td>検索 & 一覧 → 編集 </td>
+      <td><a th:href="@{/sales-products}"><i class="bi bi-bag-plus"></i>販売</a></td>
+      <td><a href="https://www.sociomedia.co.jp/1645" class="link-secondary fs-5">RM-E 展開</a></td>
     </tr>
+
     <tr>
+      <td>検索 → 検索 → 一覧 </td>
       <td><a th:href="@{/shipping/search1}"><i class="bi bi-truck"></i>出荷</a></td>
-      <td>検索 → 検索 → 一覧操作 </td>
-      <td><a href="https://www.sociomedia.co.jp/1655">R-R-M 展開</a></td>
+      <td><a href="https://www.sociomedia.co.jp/1655" class="link-secondary fs-5">R-R-M 展開</a></td>
     </tr>
+
     <tr>
-      <td><a th:href="@{/sales-products}"><i class="bi bi-bag-plus"></i>販売商品</a></td>
-      <td>検索 & 一覧操作 → 編集 </td>
-      <td><a href="https://www.sociomedia.co.jp/1645">RM-E 展開</a></td>
+      <td>一覧 → 編集</td>
+      <td><a th:href="@{/customers}"><i class="bi bi-building"></i>顧客</a></td>
+      <td><a href="https://www.sociomedia.co.jp/1671" class="link-secondary fs-5">M-E 展開</a></td>
     </tr>
+
     <tr>
+      <td>一覧 → 詳細 → 編集 </td>
+      <td><a th:href="@{/jewelries}"><i class="bi bi-gem"></i>ジュエリー</a></td>
+      <td><a href="https://www.sociomedia.co.jp/1667" class="link-secondary fs-5">M-V-E 展開</a></td>
+    </tr>
+
+    <tr>
+      <td>一覧 & 詳細</td>
       <td><a th:href="@{/invoices}"><i class="bi bi-receipt"></i>請求</a></td>
-      <td>一覧操作 & 詳細</td>
-      <td><a href="https://www.sociomedia.co.jp/1638">MV 展開</a></td>
+      <td><a href="https://www.sociomedia.co.jp/1638" class="link-secondary fs-5">MV 展開</a></td>
     </tr>
 
     </tbody>
