@@ -43,15 +43,17 @@ public class CustomerDataSource implements CustomerRepository {
     }
 
     @Override
-    public CustomerId update(CustomerId customerId, Customer customer) {
+    public void update(CustomerId customerId, Customer customer) {
         UUID revision = UUID.randomUUID();
         customerMapper.registerRevision(customerId, revision);
         customerMapper.registerCustomerName(customerId, revision, customer.customerName());
         customerMapper.registerContact(customerId, revision, customer.contact());
         customerMapper.deleteActive(customerId);
         customerMapper.registerActive(customerId, revision);
-        return customerId;
     }
 
-
+    @Override
+    public void delete(CustomerId customerId) {
+        customerMapper.deleteActive(customerId);
+    }
 }

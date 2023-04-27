@@ -42,4 +42,11 @@ public class CustomerService {
     public void update(CustomerId customerId, Customer customer) {
         customerRepository.update(customerId, customer);
     }
+
+    /**
+     * 顧客を削除する
+     */
+    public void delete(CustomerId customerId) {
+        customerRepository.delete(customerId);
+    }
 }

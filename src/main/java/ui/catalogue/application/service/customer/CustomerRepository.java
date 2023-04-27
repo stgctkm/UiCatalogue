@@ -11,5 +11,7 @@ public interface CustomerRepository {
 
     CustomerId register(Customer customer);
 
-    CustomerId update(CustomerId customerId, Customer customer);
+    void update(CustomerId customerId, Customer customer);
+
+    void delete(CustomerId customerId);
 }

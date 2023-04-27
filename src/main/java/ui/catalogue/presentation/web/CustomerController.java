@@ -52,7 +52,7 @@ class CustomerController {
     String register(@ModelAttribute Customer customer,
                     RedirectAttributes redirectAttributes) {
         customerService.register(customer);
-        redirectAttributes.addFlashAttribute("message", "顧客登録 完了しました");
+        redirectAttributes.addFlashAttribute("message", "顧客登録しました");
         return "redirect:/customers";
     }
 
@@ -62,7 +62,16 @@ class CustomerController {
             @ModelAttribute Customer customer,
             RedirectAttributes redirectAttributes) {
         customerService.update(customerId, customer);
-        redirectAttributes.addFlashAttribute("message", "顧客更新 完了しました");
+        redirectAttributes.addFlashAttribute("message", "顧客更新しました");
+        return "redirect:/customers";
+    }
+
+    @DeleteMapping("{customerId}")
+    String delete(
+            @PathVariable CustomerId customerId,
+            RedirectAttributes redirectAttributes) {
+        customerService.delete(customerId);
+        redirectAttributes.addFlashAttribute("message", "顧客削除しました");
         return "redirect:/customers";
     }
 

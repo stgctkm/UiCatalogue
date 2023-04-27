@@ -35,98 +35,20 @@
           <i class="bi bi-building" style="font-size: 1.5rem;"></i>
         </a>
       </td>
-      <td >
-        <a th:href="@{|/customers/${customerSummary.customerId}|}" th:text="${customerSummary.customerNumber}">7995319863</a></td>
+      <td>
+        <a th:href="@{|/customers/${customerSummary.customerId}|}" th:text="${customerSummary.customerNumber}">7995319863</a>
+      </td>
       <td th:text="${customerSummary.customerName.name}">アナハイム・エレクトロニクス</td>
       <td th:text="${customerSummary.phoneNumber}">03-1234-2354</td>
-      <td class="text-center"><button class="btn btn-danger">削除</button></td>
-    </tr>
-    <!--/*
-    <tr class="align-middle">
       <td class="text-center">
-        <a href="" th:href="@{/customers/7995319863}">
-          <i class="bi bi-building" style="font-size: 1.5rem;"></i>
-        </a>
+        <form th:action="@{|/customers/${customerSummary.customerId}|}"
+              th:method="delete">
+          <button class="btn btn-danger" type="submit">
+            削除
+          </button>
+        </form>
       </td>
-      <td >
-        <a th:href="@{/customers/7995319863}">7995319863</a></td>
-      <td >アナハイム・エレクトロニクス</td>
-      <td >03-1234-2354</td>
-      <td class="text-center"><button class="btn btn-danger">削除</button></td>
     </tr>
-    <tr class="align-middle">
-      <td class="text-center">
-        <a href="" th:href="@{/customers/3425841047}">
-          <i class="bi bi-building" style="font-size: 1.5rem;"></i>
-        </a>
-      </td>
-      <td>
-        <a th:href="@{/customers/3425841047}">3425841047</a></td>
-      <td>有限会社ナカジマ</td>
-      <td>0466-83-4071</td>
-      <td class="text-center"><button class="btn btn-danger">削除</button></td>
-    </tr>
-    <tr class="align-middle">
-      <td class="text-center">
-        <a href="" th:href="@{/customers/9076660948}">
-          <i class="bi bi-building" style="font-size: 1.5rem;"></i>
-        </a>
-      </td>
-      <td>
-        <a th:href="@{/customers/9076660948}">9076660948</a></td>
-      <td>株式会社東栄</td>
-      <td>03-2505-3385</td>
-      <td class="text-center"><button class="btn btn-danger">削除</button></td>
-    </tr>
-    <tr class="align-middle">
-      <td class="text-center">
-        <a href="" th:href="@{/customers/7403229142}">
-          <i class="bi bi-building" style="font-size: 1.5rem;"></i>
-        </a>
-      </td>
-      <td>
-        <a th:href="@{/customers/7403229142}">7403229142</a></td>
-      <td>合資会社関東教具製作所</td>
-      <td>03-8017-0928</td>
-      <td class="text-center"><button class="btn btn-danger">削除</button></td>
-    </tr>
-    <tr class="align-middle">
-      <td class="text-center">
-        <a href="" th:href="@{/customers/3695885821}">
-          <i class="bi bi-building" style="font-size: 1.5rem;"></i>
-        </a>
-      </td>
-      <td >
-        <a th:href="@{/customers/3695885821}">3695885821</a></td>
-      <td >株式会社アッシュ</td>
-      <td >0438-01-9176</td>
-      <td class="text-center"><button class="btn btn-danger">削除</button></td>
-    </tr>
-    <tr class="align-middle">
-      <td class="text-center">
-        <a href="" th:href="@{/customers/1954997431}">
-          <i class="bi bi-building" style="font-size: 1.5rem;"></i>
-        </a>
-      </td>
-      <td >
-        <a th:href="@{/customers/1954997431}">1954997431</a></td>
-      <td >合資会社中島商店</td>
-      <td >0930-50-8441</td>
-      <td class="text-center"><button class="btn btn-danger">削除</button></td>
-    </tr>
-    <tr class="align-middle">
-      <td class="text-center">
-        <a href="" th:href="@{customers/2785808962}">
-          <i class="bi bi-building" style="font-size: 1.5rem;"></i>
-        </a>
-      </td>
-      <td>
-        <a th:href="@{customers/2785808962}">2785808962</a></td>
-      <td >株式会社クライム</td>
-      <td >0531-13-3753</td>
-      <td class="text-center"><button class="btn btn-danger">削除</button></td>
-    </tr>
-    */-->
     </tbody>
   </table>
 
