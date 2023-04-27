@@ -4,44 +4,68 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="ui.catalogue.infrastructure.datasource.customer.CustomerMapper">
 
-<!--    <insert id="register">-->
-<!--        INSERT INTO 顧客.顧客 (顧客ID, 顧客番号, 顧客名, 顧客名カナ)-->
-<!--        VALUES (-->
-<!--                #{customerId.value},-->
-<!--                #{customerNumber.value},-->
-<!--                #{customer.customerName.name.value},-->
-<!--                #{customer.customerName.nameKana.value}-->
-<!--                )-->
-<!--    </insert>-->
+    <insert id="register">
+        INSERT INTO 顧客.顧客 (顧客ID, 顧客番号)
+        VALUES (#{customerId.value},
+                #{customerNumber.value})
+    </insert>
 
-<!--    <insert id="registerContact">-->
-<!--        INSERT INTO 顧客.連絡先 (顧客ID, 都道府県, 住所, 電話番号, 担当者名)-->
-<!--        VALUES (-->
-<!--                #{customerId.value},-->
-<!--                #{customer.contact.address.prefecture},-->
-<!--                #{customer.contact.address.addressLine},-->
-<!--                #{customer.contact.phoneNumber.value},-->
-<!--                #{customer.contact.personInCharge}-->
-<!--               )-->
-<!--    </insert>-->
+    <insert id="registerRevision">
+        INSERT INTO 顧客.顧客リビジョン (顧客ID, リビジョン)
+        VALUES (#{customerId.value},
+                #{revision})
+    </insert>
 
-<!--    <select id="summaries" resultType="guide.tm.domain.model.customer.CustomerSummary">-->
-<!--        SELECT-->
-<!--            顧客ID AS "customerId.value",-->
-<!--            顧客名 AS "name.value"-->
-<!--        FROM 顧客.顧客-->
-<!--    </select>-->
+    <insert id="registerCustomerName">
+        INSERT INTO 顧客.顧客名称 (顧客ID, リビジョン, 顧客名, 顧客名カナ)
+        VALUES (#{customerId.value},
+                #{revision},
+                #{customerName.name},
+                #{customerName.nameKana})
+    </insert>
 
-<!--    <resultMap id="SingleAllocation" type="guide.tm.domain.model.allocation.single.SingleAllocation">-->
-<!--        <id property="singleAllocationNumber.value" column="引当番号"/>-->
-<!--        <result property="salesOrderNumber.value" column="受注番号"/>-->
-<!--        <result property="salesOrderItemNumber.value" column="受注明細番号"/>-->
-<!--        <result property="productAllocation.productCode.value" column="商品コード"/>-->
-<!--        <collection property="productAllocation.allocatedLocations.list" ofType="guide.tm.domain.model.allocation.location.AllocatedLocation">-->
-<!--            <result property="wareHouseCode.value" column="倉庫コード"/>-->
-<!--            <result property="allocatedQuantity.value" column="引当数量"/>-->
-<!--        </collection>-->
-<!--    </resultMap>-->
+    <insert id="registerContact">
+        INSERT INTO 顧客.連絡先 (顧客ID, リビジョン, Eメール, 郵便番号, 住所, 建物, 電話番号, 担当者名, 担当部署)
+        VALUES (#{customerId.value},
+                #{revision},
+                #{contact.email.value},
+                #{contact.address.postalCode.value},
+                #{contact.address.addressLine},
+                #{contact.address.building},
+                #{contact.phoneNumber.value},
+                #{contact.personInCharge},
+                #{contact.division})
+    </insert>
+
+    <insert id="registerActive">
+        INSERT INTO 顧客._現在の顧客リビジョン (顧客ID, リビジョン)
+        VALUES (#{customerId.value},
+                #{revision})
+    </insert>
+
+    <delete id="deleteActive">
+        DELETE
+        FROM 顧客._現在の顧客リビジョン
+        WHERE 顧客ID = #{customerId.value}
+    </delete>
+
+    <!--    <select id="summaries" resultType="guide.tm.domain.model.customer.CustomerSummary">-->
+    <!--        SELECT-->
+    <!--            顧客ID AS "customerId.value",-->
+    <!--            顧客名 AS "name.value"-->
+    <!--        FROM 顧客.顧客-->
+    <!--    </select>-->
+
+    <!--    <resultMap id="SingleAllocation" type="guide.tm.domain.model.allocation.single.SingleAllocation">-->
+    <!--        <id property="singleAllocationNumber.value" column="引当番号"/>-->
+    <!--        <result property="salesOrderNumber.value" column="受注番号"/>-->
+    <!--        <result property="salesOrderItemNumber.value" column="受注明細番号"/>-->
+    <!--        <result property="productAllocation.productCode.value" column="商品コード"/>-->
+    <!--        <collection property="productAllocation.allocatedLocations.list" ofType="guide.tm.domain.model.allocation.location.AllocatedLocation">-->
+    <!--            <result property="wareHouseCode.value" column="倉庫コード"/>-->
+    <!--            <result property="allocatedQuantity.value" column="引当数量"/>-->
+    <!--        </collection>-->
+    <!--    </resultMap>-->
 
     <resultMap id="customerId" type="ui.catalogue.domain.model.customer.identifier.CustomerId">
         <constructor>
@@ -84,12 +108,18 @@
     <resultMap id="contact" type="ui.catalogue.domain.model.customer.contact.Contact">
         <constructor>
             <arg resultMap="email" javaType="ui.catalogue.domain.model.customer.contact.Email"/>
-            <arg resultMap="postalCode" javaType="ui.catalogue.domain.model.customer.contact.address.PostalCode"/>
-            <arg javaType="string" column="住所"/>
-            <arg javaType="string" column="建物"/>
+            <arg resultMap="address" javaType="ui.catalogue.domain.model.customer.contact.address.Address"/>
             <arg resultMap="phoneNumber" javaType="ui.catalogue.domain.model.customer.contact.phone.PhoneNumber"/>
             <arg javaType="string" column="担当者名"/>
             <arg javaType="string" column="担当部署"/>
+        </constructor>
+    </resultMap>
+
+    <resultMap id="address" type="ui.catalogue.domain.model.customer.contact.address.Address">
+        <constructor>
+            <arg resultMap="postalCode" javaType="ui.catalogue.domain.model.customer.contact.address.PostalCode"/>
+            <arg javaType="string" column="住所"/>
+            <arg javaType="string" column="建物"/>
         </constructor>
     </resultMap>
 
@@ -102,23 +132,25 @@
         </constructor>
     </resultMap>
 
+
     <select id="customerSummaries" resultMap="customerSummary">
 
-        SELECT
-            顧客.顧客ID,
-            顧客番号,
-            顧客名,
-            顧客名カナ,
-            電話番号
+        SELECT 顧客.顧客ID,
+               顧客番号,
+               顧客名,
+               顧客名カナ,
+               電話番号
         FROM 顧客.顧客
-        INNER JOIN 顧客.連絡先 ON 顧客.顧客ID = 連絡先.顧客ID
+                 INNER JOIN 顧客.顧客リビジョン ON 顧客.顧客ID = 顧客リビジョン.顧客ID
+                 INNER JOIN 顧客._現在の顧客リビジョン
+                            ON 顧客リビジョン.顧客ID = _現在の顧客リビジョン.顧客ID AND 顧客リビジョン.リビジョン = _現在の顧客リビジョン.リビジョン
+                 INNER JOIN 顧客.顧客名称 ON 顧客リビジョン.顧客ID = 顧客名称.顧客ID AND 顧客リビジョン.リビジョン = 顧客名称.リビジョン
+                 INNER JOIN 顧客.連絡先 ON 顧客リビジョン.顧客ID = 連絡先.顧客ID AND 顧客リビジョン.リビジョン = 連絡先.リビジョン
     </select>
 
-    <!--
     <select id="newCustomerNumber" resultType="long">
         SELECT nextval('顧客.顧客番号')
     </select>
-    -->
 
     <resultMap id="customer" type="ui.catalogue.domain.model.customer.Customer">
         <constructor>
@@ -142,7 +174,12 @@
             連絡先.担当者名,
             連絡先.担当部署
         FROM 顧客.顧客
-        INNER JOIN 顧客.連絡先 ON 顧客.顧客ID = 連絡先.顧客ID
+                 INNER JOIN 顧客.顧客リビジョン ON 顧客.顧客ID = 顧客リビジョン.顧客ID
+                 INNER JOIN 顧客._現在の顧客リビジョン
+                            ON 顧客リビジョン.顧客ID = _現在の顧客リビジョン.顧客ID AND 顧客リビジョン.リビジョン = _現在の顧客リビジョン.リビジョン
+                 INNER JOIN 顧客.顧客名称 ON 顧客リビジョン.顧客ID = 顧客名称.顧客ID AND 顧客リビジョン.リビジョン = 顧客名称.リビジョン
+                 INNER JOIN 顧客.連絡先 ON 顧客リビジョン.顧客ID = 連絡先.顧客ID AND 顧客リビジョン.リビジョン = 連絡先.リビジョン
         WHERE 顧客.顧客ID = #{customerId.value}
     </select>
+
 </mapper>

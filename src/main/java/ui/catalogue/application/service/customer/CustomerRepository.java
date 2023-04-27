@@ -8,4 +8,8 @@ public interface CustomerRepository {
     Customer customerOf(CustomerId customerId);
 
     CustomerSummaries customerSummaries();
+
+    CustomerId register(Customer customer);
+
+    CustomerId update(CustomerId customerId, Customer customer);
 }

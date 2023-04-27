@@ -22,8 +22,24 @@ public class CustomerService {
     }
 
 
+    /**
+     * 顧客サマリーのリストを取得する
+     */
     public CustomerSummaries customerSummaries() {
         return customerRepository.customerSummaries();
     }
 
+    /**
+     * 顧客を登録する
+     */
+    public CustomerId register(Customer customer) {
+        return customerRepository.register(customer);
+    }
+
+    /**
+     * 顧客を更新する
+     */
+    public void update(CustomerId customerId, Customer customer) {
+        customerRepository.update(customerId, customer);
+    }
 }
