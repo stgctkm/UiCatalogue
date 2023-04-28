@@ -8,4 +8,12 @@ import ui.catalogue.domain.primitive.Amount;
 public class Price {
     Amount retailPrice;
     Amount listPrice;
+
+    public Amount retailPrice() {
+        return retailPrice;
+    }
+
+    public Amount listPrice() {
+        return listPrice;
+    }
 }

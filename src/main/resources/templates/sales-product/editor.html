@@ -11,13 +11,16 @@
 <header th:replace="~{_parts/header :: main('検索 & 一覧 → 編集')}"></header>
 <div class="container">
 
-  <div class="col-md-7 col-lg-8">
+  <div class="col-md-7 col-lg-8" th:object="${salesProduct}">
     <h4 class="mb-3">販売商品</h4>
     <form class="needs-validation" novalidate>
       <div class="row g-3 mb-3">
         <div class="col-sm-6">
           <label for="firstName" class="form-label">販売商品名称</label>
-          <input type="text" class="form-control" id="firstName" placeholder="" value="日立 “自動投入×ＡＩお洗濯” 大容量１２ｋｇタイプの タテ型洗濯乾燥機 ビートウォッシュ " required>
+          <input class="form-control" id="firstName" placeholder="" required
+                 th:field="*{salesProductName.name}"
+                 type="text"
+                 value="日立 “自動投入×ＡＩお洗濯” 大容量１２ｋｇタイプの タテ型洗濯乾燥機 ビートウォッシュ ">
           <div class="invalid-feedback">
             Valid first name is required.
           </div>
@@ -25,7 +28,9 @@
 
         <div class="col-sm-6">
           <label for="lastName" class="form-label">販売商品略称</label>
-          <input type="text" class="form-control" id="lastName" placeholder="" value="日立  ビートウォッシュ " required>
+          <input class="form-control" id="lastName" placeholder="" required th:field="*{salesProductName.abbreviation}"
+                 type="text"
+                 value="日立  ビートウォッシュ ">
           <div class="invalid-feedback">
             Valid last name is required.
           </div>
@@ -36,10 +41,14 @@
           <label for="sales-period" class="form-label">販売期間</label>
           <div class="input-group mb-3" id="sales-period">
             <label for="sales-period-from" class="form-label"></label>
-            <input type="date" class="form-control" value="2023-04-12" id="sales-period-from">
+            <input class="form-control" id="sales-period-from" th:field="*{salesPeriod.from}" type="date"
+                   value="2023-04-12"
+            >
             <span class="input-group-text">〜</span>
             <label for="sales-period-to" class="form-label"></label>
-            <input type="date" class="form-control" value="2023-04-30" id="sales-period-to">
+            <input class="form-control" id="sales-period-to" th:field="*{salesPeriod.to}" type="date"
+                   value="2023-04-30"
+            >
           </div>
           <div class="invalid-feedback">
             Please enter a valid email address for shipping updates.
@@ -48,16 +57,20 @@
         </div>
 
         <div class="row mt-3">
-        <div class="col-md-3">
-          <label for="price" class="form-label">販売価格</label>
-          <input type="text" class="form-control" id="price" placeholder="" value="159,980" required>
-          <div class="invalid-feedback">
-            販売価格 required.
+          <div class="col-md-3">
+            <label class="form-label" for="price">販売価格</label>
+            <input class="form-control" id="price" placeholder="" required th:field="*{price.retailPrice}"
+                   type="text"
+                   value="159,980">
+            <div class="invalid-feedback">
+              販売価格 required.
+            </div>
           </div>
-        </div>
           <div class="col-md-3">
             <label for="normal-price" class="form-label">通常価格</label>
-            <input type="text" class="form-control" id="normal-price" placeholder="" value="316,800" required>
+            <input class="form-control" id="normal-price" placeholder="" required th:field="*{price.listPrice}"
+                   type="text"
+                   value="316,800">
             <div class="invalid-feedback">
               通常価格 required.
             </div>
@@ -67,28 +80,23 @@
         <div class="row mt-3">
           <div class="col-md-5">
             <label for="color" class="form-label">色</label>
-            <select class="form-select" id="color" required>
-              <option value="">Choose...</option>
-              <option selected>白</option>
-              <option>黒</option>
-            </select>
+            <input class="form-control" id="color" placeholder="" required th:field="*{color}"
+                   type="text"
+                   value="白">
           </div>
 
           <div class="col-md-5">
             <label for="size" class="form-label">サイズ</label>
-            <select class="form-select" id="size" required>
-              <option value="">Choose...</option>
-              <option>S</option>
-              <option selected>M</option>
-              <option>L</option>
-            </select>
+            <input class="form-control" id="size" placeholder="" required th:field="*{size}"
+                   type="text"
+                   value="L">
           </div>
 
         </div>
 
         <div class="col-12">
           <label for="description" class="form-label">商品説明</label>
-          <textarea class="form-control" id="description" rows="3">
+          <textarea class="form-control" id="description" rows="3" th:field="*{description}">
 “押して＋たたいて＋もみ洗う”＆“大流量のナイアガラシャワー”で洗いムラを抑えてきわだつ白さに！
           </textarea>
           <div class="invalid-feedback">
@@ -98,7 +106,7 @@
 
         <div class="col-12">
           <label for="remark" class="form-label">備考</label>
-          <textarea class="form-control" id="remark" rows="5">
+          <textarea class="form-control" id="remark" rows="5" th:field="*{remark}">
 メーカー保証付き商品について
 
 ショップチャンネルでは商品に同封されているメーカー保証書への、お買い上げ日の記入を省略させていただいております。

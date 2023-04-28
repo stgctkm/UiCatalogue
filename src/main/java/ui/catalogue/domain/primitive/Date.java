@@ -17,6 +17,7 @@ public class Date {
     }
 
     public Date(String value) {
+        if (value.isEmpty()) return;
         this.value = LocalDate.parse(value, DateTimeFormatter.ISO_LOCAL_DATE);
     }
 
@@ -30,6 +31,7 @@ public class Date {
 
     @Override
     public String toString() {
+        if (value == null) return "";
         return value.format(DateTimeFormatter.ofPattern("uuuu-MM-dd"));
     }
 

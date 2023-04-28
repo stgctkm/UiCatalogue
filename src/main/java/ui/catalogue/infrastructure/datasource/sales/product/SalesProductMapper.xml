@@ -36,7 +36,29 @@
                 ]]>
             </if>
         </where>
-
     </select>
 
+    <select id="salesProductOf" resultType="ui.catalogue.domain.model.sales.product.SalesProduct">
+        SELECT 販売商品.販売商品ID,
+               販売商品.販売商品コード    AS "salesProductCode.value",
+               販売商品内容.商品名称   AS "salesProductName.name",
+               販売商品内容.商品略称   AS "salesProductName.abbreviation",
+               販売商品内容.販売開始日 AS "salesPeriod.from.value",
+               販売商品内容.販売終了日 AS "salesPeriod.to.value",
+               販売商品内容.販売価格   AS "price.retailPrice.value",
+               販売商品内容.定価       AS "price.listPrice.value",
+               販売商品内容.色         AS "color",
+               販売商品内容.サイズ        AS "size",
+               販売商品内容.説明       AS "description",
+               販売商品内容.備考       AS "remark"
+        FROM 販売.販売商品
+                 INNER JOIN 販売.販売商品リビジョン ON 販売商品.販売商品ID = 販売商品リビジョン.販売商品ID
+                 INNER JOIN 販売._現在の販売商品リビジョン
+                            ON 販売商品リビジョン.販売商品ID = _現在の販売商品リビジョン.販売商品ID
+                                AND 販売商品リビジョン.リビジョン = _現在の販売商品リビジョン.リビジョン
+                 INNER JOIN 販売.販売商品内容
+                            ON 販売商品リビジョン.販売商品ID = 販売商品内容.販売商品ID
+                                AND 販売商品リビジョン.リビジョン = 販売商品内容.リビジョン
+        WHERE 販売商品.販売商品ID = #{salesProductId.value}
+    </select>
 </mapper>

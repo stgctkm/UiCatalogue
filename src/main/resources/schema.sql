@@ -112,6 +112,8 @@ CREATE TABLE 販売.販売商品内容
     商品略称   VARCHAR(30)   NOT NULL,
     販売開始日 DATE          NOT NULL,
     販売終了日 DATE          NOT NULL,
+    販売価格   NUMERIC(7)    NOT NULL,
+    定価       NUMERIC(7)    NOT NULL,
     色         VARCHAR(5)    NOT NULL,
     サイズ        VARCHAR(5)    NOT NULL,
     説明       VARCHAR(1000) NOT NULL,

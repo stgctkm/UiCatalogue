@@ -5,7 +5,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import ui.catalogue.application.service.sales.product.SalesProductService;
+import ui.catalogue.domain.model.sales.product.SalesProduct;
 import ui.catalogue.domain.model.sales.product.criteria.SalesProductSearchCriteria;
+import ui.catalogue.domain.model.sales.product.identifier.SalesProductId;
 import ui.catalogue.domain.model.sales.product.summary.SalesProductSummaries;
 
 @Controller
@@ -37,8 +39,12 @@ public class SalesProductController {
         return "sales-product/new";
     }
 
-    @GetMapping("{salesProductNumber}")
-    String salesProduct(@PathVariable String salesProductNumber) {
+    @GetMapping("{salesProductId}")
+    String salesProduct(
+            @PathVariable SalesProductId salesProductId,
+            Model model) {
+        SalesProduct salesProduct = salesProductService.salesProductOf(salesProductId);
+        model.addAttribute("salesProduct", salesProduct);
         return "sales-product/editor";
     }
 

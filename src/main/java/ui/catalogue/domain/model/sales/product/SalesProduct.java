@@ -17,4 +17,36 @@ public class SalesProduct {
     String size;
     String description;
     String remark;
+
+    public SalesProductCode salesProductCode() {
+        return salesProductCode;
+    }
+
+    public SalesProductName salesProductName() {
+        return salesProductName;
+    }
+
+    public SalesPeriod salesPeriod() {
+        return salesPeriod;
+    }
+
+    public Price price() {
+        return price;
+    }
+
+    public String color() {
+        return color;
+    }
+
+    public String size() {
+        return size;
+    }
+
+    public String description() {
+        return description;
+    }
+
+    public String remark() {
+        return remark;
+    }
 }

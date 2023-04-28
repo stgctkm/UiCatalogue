@@ -2,7 +2,9 @@ package ui.catalogue.infrastructure.datasource.sales.product;
 
 import org.springframework.stereotype.Repository;
 import ui.catalogue.application.service.sales.product.SalesProductRepository;
+import ui.catalogue.domain.model.sales.product.SalesProduct;
 import ui.catalogue.domain.model.sales.product.criteria.SalesProductSearchCriteria;
+import ui.catalogue.domain.model.sales.product.identifier.SalesProductId;
 import ui.catalogue.domain.model.sales.product.summary.SalesProductSummaries;
 import ui.catalogue.domain.model.sales.product.summary.SalesProductSummary;
 
@@ -21,5 +23,10 @@ public class SalesProductDataSource implements SalesProductRepository {
     public SalesProductSummaries summariesOf(SalesProductSearchCriteria criteria) {
         List<SalesProductSummary> summaries = salesProductMapper.summariesOf(criteria);
         return new SalesProductSummaries(summaries);
+    }
+
+    @Override
+    public SalesProduct salesProductOf(SalesProductId salesProductId) {
+        return salesProductMapper.salesProductOf(salesProductId);
     }
 }
