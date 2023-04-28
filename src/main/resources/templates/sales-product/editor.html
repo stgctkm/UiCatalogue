@@ -118,9 +118,14 @@
 
       </div>
       <button class="btn btn-primary" type="submit">更新</button>
-      <a th:href="@{/sales-products?(q=)}" class="btn btn-outline-primary">戻る</a>
+      <button class="btn btn-outline-primary" id="cancel" type="button">戻る</button>
     </form>
   </div>
 </div>
+<script>
+  document.getElementById("cancel").addEventListener("click", () => {
+    window.history.back();
+  })
+</script>
 </body>
 </html>
