@@ -9,6 +9,7 @@ import ui.catalogue.domain.model.sales.product.summary.SalesProductSummaries;
 import ui.catalogue.domain.model.sales.product.summary.SalesProductSummary;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public class SalesProductDataSource implements SalesProductRepository {
@@ -28,5 +29,14 @@ public class SalesProductDataSource implements SalesProductRepository {
     @Override
     public SalesProduct salesProductOf(SalesProductId salesProductId) {
         return salesProductMapper.salesProductOf(salesProductId);
+    }
+
+    @Override
+    public void update(SalesProductId salesProductId, SalesProduct salesProduct) {
+        UUID revision = UUID.randomUUID();
+        salesProductMapper.registerRevision(salesProductId, revision);
+        salesProductMapper.registerSalesProductContent(salesProductId, revision, salesProduct);
+        salesProductMapper.deleteActive(salesProductId);
+        salesProductMapper.registerActive(salesProductId, revision);
     }
 }

@@ -10,4 +10,6 @@ public interface SalesProductRepository {
     SalesProductSummaries summariesOf(SalesProductSearchCriteria criteria);
 
     SalesProduct salesProductOf(SalesProductId salesProductId);
+
+    void update(SalesProductId salesProductId, SalesProduct salesProduct);
 }

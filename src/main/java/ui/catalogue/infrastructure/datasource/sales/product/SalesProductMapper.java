@@ -8,6 +8,7 @@ import ui.catalogue.domain.model.sales.product.identifier.SalesProductId;
 import ui.catalogue.domain.model.sales.product.summary.SalesProductSummary;
 
 import java.util.List;
+import java.util.UUID;
 
 @Mapper
 interface SalesProductMapper {
@@ -16,4 +17,20 @@ interface SalesProductMapper {
 
     SalesProduct salesProductOf(
             @Param("salesProductId") SalesProductId salesProductId);
+
+    void registerRevision(
+            @Param("salesProductId") SalesProductId salesProductId,
+            @Param("revision") UUID revision);
+
+    void registerSalesProductContent(
+            @Param("salesProductId") SalesProductId salesProductId,
+            @Param("revision") UUID revision,
+            @Param("salesProduct") SalesProduct salesProduct);
+
+    void deleteActive(
+            @Param("salesProductId") SalesProductId salesProductId);
+
+    void registerActive(
+            @Param("salesProductId") SalesProductId salesProductId,
+            @Param("revision") UUID revision);
 }

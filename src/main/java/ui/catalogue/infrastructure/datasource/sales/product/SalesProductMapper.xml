@@ -4,6 +4,44 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="ui.catalogue.infrastructure.datasource.sales.product.SalesProductMapper">
 
+    <insert id="registerSalesProduct">
+        INSERT INTO 販売.販売商品 (販売商品ID, 販売商品コード)
+        VALUES
+    </insert>
+
+    <insert id="registerRevision">
+        INSERT INTO 販売.販売商品リビジョン (販売商品ID, リビジョン)
+        VALUES (#{salesProductId.value}, #{revision})
+    </insert>
+
+    <insert id="registerSalesProductContent">
+        INSERT INTO 販売.販売商品内容 (販売商品ID, リビジョン, 商品名称, 商品略称, 販売開始日, 販売終了日, 販売価格, 定価, 色, サイズ, 説明, 備考)
+        VALUES (#{salesProductId.value},
+                #{revision},
+                #{salesProduct.salesProductName.name},
+                #{salesProduct.salesProductName.abbreviation},
+                #{salesProduct.salesPeriod.from.value},
+                #{salesProduct.salesPeriod.to.value},
+                #{salesProduct.price.retailPrice.value},
+                #{salesProduct.price.listPrice.value},
+                #{salesProduct.color},
+                #{salesProduct.size},
+                #{salesProduct.description},
+                #{salesProduct.remark})
+    </insert>
+
+    <insert id="registerActive">
+        INSERT INTO 販売._現在の販売商品リビジョン (販売商品ID, リビジョン)
+        VALUES (#{salesProductId.value}, #{revision})
+    </insert>
+
+    <delete id="deleteActive">
+        DELETE
+        FROM 販売._現在の販売商品リビジョン
+        WHERE _現在の販売商品リビジョン.販売商品ID = #{salesProductId.value}
+    </delete>
+
+
     <select id="summariesOf" resultType="ui.catalogue.domain.model.sales.product.summary.SalesProductSummary">
         SELECT
         販売商品.販売商品ID AS "salesProductId.value",

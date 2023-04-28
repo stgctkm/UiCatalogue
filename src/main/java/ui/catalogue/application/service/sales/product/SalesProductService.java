@@ -30,4 +30,11 @@ public class SalesProductService {
     public SalesProduct salesProductOf(SalesProductId salesProductId) {
         return salesProductRepository.salesProductOf(salesProductId);
     }
+
+    /**
+     * 販売商品を更新する
+     */
+    public void update(SalesProductId salesProductId, SalesProduct salesProduct) {
+        salesProductRepository.update(salesProductId, salesProduct);
+    }
 }

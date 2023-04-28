@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ui.catalogue.application.service.sales.product.SalesProductService;
 import ui.catalogue.domain.model.sales.product.SalesProduct;
 import ui.catalogue.domain.model.sales.product.criteria.SalesProductSearchCriteria;
@@ -48,12 +49,38 @@ public class SalesProductController {
         return "sales-product/editor";
     }
 
+    @PutMapping("{salesProductId}")
+    String update(
+            @PathVariable("salesProductId") SalesProductId salesProductId,
+            @ModelAttribute("salesProduct") SalesProduct salesProduct,
+            RedirectAttributes redirectAttributes) {
+        salesProductService.update(salesProductId, salesProduct);
+        redirectAttributes.addFlashAttribute("message", "販売商品を更新しました");
+        return "redirect:/sales-products";
+    }
+
     @InitBinder("salesProductSearchCriteria")
     void bindCriteria(WebDataBinder binder) {
         binder.setAllowedFields(
                 "salesPeriod.from",
                 "salesPeriod.to",
                 "name"
+        );
+    }
+
+    @InitBinder("salesProduct")
+    void bindSalesProduct(WebDataBinder binder) {
+        binder.setAllowedFields(
+                "salesProductName.name",
+                "salesProductName.abbreviation",
+                "salesPeriod.from",
+                "salesPeriod.to",
+                "price.retailPrice",
+                "price.listPrice",
+                "color",
+                "size",
+                "description",
+                "remark"
         );
     }
 }
