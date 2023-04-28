@@ -12,7 +12,11 @@
 <div class="container">
 
   <h4 class="mb-3">販売商品一覧</h4>
-
+  <div class="text-success display-6 bg-success-subtle"
+       th:if="${message}"
+       th:text="${message}"
+  >
+  </div>
   <form class="mt-3" method="get" th:action="@{/sales-products}"
         th:method="get"
         th:object="${salesProductSearchCriteria}">

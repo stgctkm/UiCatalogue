@@ -14,7 +14,7 @@ public class Amount {
    }
 
    public Amount(String value) {
-      this(new BigDecimal(value));
+      this(new BigDecimal(value.replaceAll(",", "")));
    }
 
    public Amount(BigDecimal value) {
