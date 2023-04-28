@@ -12,22 +12,25 @@
 <div class="container">
 
   <h4 class="mb-3">販売商品一覧</h4>
-  <form method="get" th:action="@{/sales-products}" class="mt-3">
+
+  <form class="mt-3" method="get" th:action="@{/sales-products}"
+        th:method="get"
+        th:object="${salesProductSearchCriteria}">
     <div class="mb-3 row">
       <div class="row">
         <div class="col-4">
-        <label for="sales-period" class="form-label">販売期間</label>
+          <label class="form-label" for="sales-period">販売期間</label>
           <div class="input-group mb-3" id="sales-period">
             <label for="sales-period-from" class="form-label"></label>
-            <input type="date" class="form-control" id="sales-period-from">
+            <input class="form-control" id="sales-period-from" th:field="*{salesPeriod.from}" type="date">
             <span class="input-group-text">〜</span>
             <label for="sales-period-to" class="form-label"></label>
-            <input type="date" class="form-control" id="sales-period-to">
+            <input class="form-control" id="sales-period-to" th:field="*{salesPeriod.to}" type="date">
           </div>
         </div>
         <div class="col-md-4">
           <label for="customerNameCriteria" class="form-label">販売商品名</label>
-          <input type="text" class="form-control " name="productName" id="customerNameCriteria">
+          <input class="form-control " id="customerNameCriteria" name="customerName" th:field="*{name}" type="text">
         </div>
         <div class="col-md-2">
           <label for="sales-order-search-button" class="form-label">&nbsp;</label>
@@ -39,6 +42,112 @@
       </div>
     </div>
   </form>
+
+  <table class="table table-striped table-hover" th:if="${summaries}">
+    <thead>
+    <tr>
+      <th></th>
+      <th>商品番号</th>
+      <th>販売商品名</th>
+      <th>販売期間</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="align-middle" th:each="summary : ${summaries.list}">
+      <td class="text-center">
+        <a href="" th:href="@{|/sales-products/${summary.id}|}">
+          <i class="bi bi-bag-plus" style="font-size: 1.5rem;"></i>
+        </a>
+      </td>
+      <td>
+        <a th:href="@{|/sales-products/${summary.id}|}"><span
+            th:text="${summary.salesProductCode}">7995319863</span></a></td>
+      <td><span th:text="${summary.salesProductName.name}">事前冷却不要！ ペルチェ式 アイスクリームメーカー</span></td>
+      <td><span th:text="${summary.salesPeriod}">事前冷却不要！ ペルチェ式 アイスクリームメーカー</span></td>
+    </tr>
+    <!--/*
+    <tr class="align-middle">
+      <td class="text-center">
+        <a href="" th:href="@{/sales-products/7995319863}">
+          <i class="bi bi-bag-plus" style="font-size: 1.5rem;"></i>
+        </a>
+      </td>
+      <td >
+        <a th:href="@{/sales-products/7995319863}">7995319863</a></td>
+      <td >事前冷却不要！ ペルチェ式 アイスクリームメーカー</td>
+      <td >有限会社山水</td>
+    </tr>
+    <tr class="align-middle">
+      <td class="text-center">
+        <a href="" th:href="@{/customers/3425841047}">
+          <i class="bi bi-bag-plus" style="font-size: 1.5rem;"></i>
+        </a>
+      </td>
+      <td>
+        <a th:href="@{/sales-products/3425841047}">3425841047</a></td>
+      <td>ルルド 健康新習慣！ ゆらゆら健康器 ＡＸ−ＦＹ９１９ </td>
+      <td>株式会社小林工業</td>
+    </tr>
+    <tr class="align-middle">
+      <td class="text-center">
+        <a href="" th:href="@{/sales-products/9076660948}">
+          <i class="bi bi-bag-plus" style="font-size: 1.5rem;"></i>
+        </a>
+      </td>
+      <td>
+        <a th:href="@{/sales-products/9076660948}">9076660948</a></td>
+      <td>デュクス やさしい風も パワフルな風もおまかせ！ グローブ ３Ｄサーキュレーター </td>
+      <td>合同会社Ｒｅ．ｃｏｄｅ</td>
+    </tr>
+    <tr class="align-middle">
+      <td class="text-center">
+        <a href="" th:href="@{/sales-products/7403229142}">
+          <i class="bi bi-bag-plus" style="font-size: 1.5rem;"></i>
+        </a>
+      </td>
+      <td>
+        <a th:href="@{/sales-products/7403229142}">7403229142</a></td>
+      <td>シャープ ３６０度全周吹き出し ラック下から吹き上げて 効率よく乾燥！ 衣類乾燥除湿器 ＣＶ−Ｐ６０</td>
+      <td>株式会社高橋</td>
+    </tr>
+    <tr class="align-middle">
+      <td class="text-center">
+        <a href="" th:href="@{/sales-products/3695885821}">
+          <i class="bi bi-bag-plus" style="font-size: 1.5rem;"></i>
+        </a>
+      </td>
+      <td >
+        <a th:href="@{/sales-products/3695885821}">3695885821</a></td>
+      <td >ツインバード お茶ひき器 “緑茶美採” </td>
+      <td >合名会社丸屋</td>
+    </tr>
+    <tr class="align-middle">
+      <td class="text-center">
+        <a href="" th:href="@{/sales-products/1954997431}">
+          <i class="bi bi-bag-plus" style="font-size: 1.5rem;"></i>
+        </a>
+      </td>
+      <td >
+        <a th:href="@{/sales-products/1954997431}">1954997431</a></td>
+      <td >ユーフィ 水拭きと吸引の２役！ ロボバック Ｇ１０　ハイブリッド </td>
+      <td >合資会社ケイズ・スタイル</td>
+    </tr>
+    <tr class="align-middle">
+      <td class="text-center">
+        <a href="" th:href="@{sales-products/2785808962}">
+          <i class="bi bi-bag-plus" style="font-size: 1.5rem;"></i>
+        </a>
+      </td>
+      <td>
+        <a th:href="@{sales-products/2785808962}">2785808962</a></td>
+      <td >日立 “自動投入×ＡＩお洗濯” 大容量１２ｋｇタイプの タテ型洗濯乾燥機 ビートウォッシュ </td>
+      <td >有限会社イズム</td>
+    </tr>
+    */-->
+    </tbody>
+  </table>
+
+  <a class="btn btn-outline-primary" th:href="@{/sales-products/new}">新規作成</a>
 </div>
 </body>
 </html>
