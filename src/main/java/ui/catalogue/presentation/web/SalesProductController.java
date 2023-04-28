@@ -36,7 +36,7 @@ public class SalesProductController {
     }
 
     @GetMapping("new")
-    String newSalesProduct() {
+    String newSalesProduct(@ModelAttribute("salesProduct") SalesProduct salesProduct) {
         return "sales-product/new";
     }
 
@@ -47,6 +47,15 @@ public class SalesProductController {
         SalesProduct salesProduct = salesProductService.salesProductOf(salesProductId);
         model.addAttribute("salesProduct", salesProduct);
         return "sales-product/editor";
+    }
+
+    @PostMapping
+    String register(
+            @ModelAttribute("salesProduct") SalesProduct salesProduct,
+            RedirectAttributes redirectAttributes) {
+        salesProductService.register(salesProduct);
+        redirectAttributes.addFlashAttribute("message", "販売商品を登録しました");
+        return "redirect:/sales-products";
     }
 
     @PutMapping("{salesProductId}")

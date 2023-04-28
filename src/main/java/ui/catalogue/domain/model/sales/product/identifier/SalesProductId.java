@@ -1,5 +1,7 @@
 package ui.catalogue.domain.model.sales.product.identifier;
 
+import java.util.UUID;
+
 public class SalesProductId {
     String value;
 
@@ -9,6 +11,10 @@ public class SalesProductId {
 
     public SalesProductId(String value) {
         this.value = value;
+    }
+
+    public static SalesProductId newSalesProductId() {
+        return new SalesProductId(UUID.randomUUID().toString());
     }
 
     @Override

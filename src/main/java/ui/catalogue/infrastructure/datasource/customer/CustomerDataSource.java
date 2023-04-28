@@ -31,7 +31,7 @@ public class CustomerDataSource implements CustomerRepository {
 
     @Override
     public CustomerId register(Customer customer) {
-        CustomerId customerId = CustomerId.newSCustomerId();
+        CustomerId customerId = CustomerId.newCustomerId();
         CustomerNumber customerNumber = new CustomerNumber(String.valueOf(customerMapper.newCustomerNumber()));
         UUID revision = UUID.randomUUID();
         customerMapper.register(customerId, customerNumber);

@@ -32,6 +32,13 @@ public class SalesProductService {
     }
 
     /**
+     * 販売商品を登録する
+     */
+    public void register(SalesProduct salesProduct) {
+        salesProductRepository.register(salesProduct);
+    }
+
+    /**
      * 販売商品を更新する
      */
     public void update(SalesProductId salesProductId, SalesProduct salesProduct) {

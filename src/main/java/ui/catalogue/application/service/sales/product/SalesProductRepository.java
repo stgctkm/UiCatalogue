@@ -11,5 +11,7 @@ public interface SalesProductRepository {
 
     SalesProduct salesProductOf(SalesProductId salesProductId);
 
+    void register(SalesProduct salesProduct);
+
     void update(SalesProductId salesProductId, SalesProduct salesProduct);
 }

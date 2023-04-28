@@ -11,13 +11,16 @@
 <header th:replace="~{_parts/header :: main('検索 & 一覧 → 編集')}"></header>
 <div class="container">
 
-  <div class="col-md-7 col-lg-8">
+  <div class="col-md-7 col-lg-8" th:object="${salesProduct}">
     <h4 class="mb-3">販売商品</h4>
-    <form class="needs-validation" novalidate>
+    <form class="needs-validation" novalidate
+          th:action="@{/sales-products}" th:method="post">
       <div class="row g-3 mb-3">
         <div class="col-sm-6">
           <label for="firstName" class="form-label">販売商品名称</label>
-          <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+          <input class="form-control" id="firstName" placeholder="" required
+                 th:field="*{salesProductName.name}"
+                 type="text">
           <div class="invalid-feedback">
             Valid first name is required.
           </div>
@@ -25,7 +28,9 @@
 
         <div class="col-sm-6">
           <label for="lastName" class="form-label">販売商品名称カナ</label>
-          <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+          <input class="form-control" id="lastName" placeholder=""
+                 required
+                 th:field="*{salesProductName.abbreviation}" type="text">
           <div class="invalid-feedback">
             Valid last name is required.
           </div>
@@ -36,25 +41,27 @@
           <label for="sales-period" class="form-label">販売期間</label>
           <div class="input-group mb-3" id="sales-period">
             <label for="sales-period-from" class="form-label"></label>
-            <input type="date" class="form-control" id="sales-period-from">
+            <input class="form-control" id="sales-period-from" th:field="*{salesPeriod.from}" type="date"/>
             <span class="input-group-text">〜</span>
             <label for="sales-period-to" class="form-label"></label>
-            <input type="date" class="form-control" id="sales-period-to">
+            <input class="form-control" id="sales-period-to" th:field="*{salesPeriod.to}" type="date"/>
           </div>
         </div>
         </div>
 
         <div class="row mt-3">
-        <div class="col-md-3">
-          <label for="price" class="form-label">販売価格</label>
-          <input type="text" class="form-control" id="price" placeholder="" required>
-          <div class="invalid-feedback">
-            販売価格 required.
+          <div class="col-md-3">
+            <label class="form-label" for="price">販売価格</label>
+            <input class="form-control" id="price" placeholder="" required th:field="*{price.retailPrice}"
+                   type="number"/>
+            <div class="invalid-feedback">
+              販売価格 required.
+            </div>
           </div>
-        </div>
           <div class="col-md-3">
             <label for="normal-price" class="form-label">通常価格</label>
-            <input type="text" class="form-control" id="normal-price" placeholder="" required>
+            <input class="form-control" id="normal-price" placeholder="" required th:field="*{price.listPrice}"
+                   type="number"/>
             <div class="invalid-feedback">
               通常価格 required.
             </div>
@@ -64,28 +71,22 @@
         <div class="row mt-3">
           <div class="col-md-5">
             <label for="color" class="form-label">色</label>
-            <select class="form-select" id="color" required>
-              <option value="">Choose...</option>
-              <option>白</option>
-              <option>黒</option>
-            </select>
+            <input class="form-control" id="color" placeholder="" required th:field="*{color}"
+                   type="text"/>
           </div>
 
           <div class="col-md-5">
             <label for="size" class="form-label">サイズ</label>
-            <select class="form-select" id="size" required>
-              <option value="">Choose...</option>
-              <option>S</option>
-              <option>M</option>
-              <option>L</option>
-            </select>
+            <input class="form-control" id="size" placeholder="" required th:field="*{size}"
+                   type="text"/>
           </div>
 
         </div>
 
         <div class="col-12">
           <label for="description" class="form-label">商品説明</label>
-          <textarea class="form-control" id="description" ></textarea>
+          <textarea class="form-control" id="description" rows="3" th:field="*{description}">
+          </textarea>
           <div class="invalid-feedback">
             商品説明を入力してください
           </div>
@@ -93,11 +94,12 @@
 
         <div class="col-12">
           <label for="remark" class="form-label">備考</label>
-          <textarea class="form-control" id="remark" ></textarea>
+          <textarea class="form-control" id="remark" rows="5" th:field="*{remark}">
+          </textarea>
         </div>
 
       </div>
-      <a th:href="@{/sales-products?(q=)}" class="btn btn-primary">登録</a>
+      <button class="btn btn-primary" type="submit">登録</button>
       <a th:href="@{/sales-products?(q=)}" class="btn btn-outline-primary">キャンセル</a>
     </form>
   </div>

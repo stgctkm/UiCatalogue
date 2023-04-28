@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import ui.catalogue.application.service.sales.product.SalesProductRepository;
 import ui.catalogue.domain.model.sales.product.SalesProduct;
 import ui.catalogue.domain.model.sales.product.criteria.SalesProductSearchCriteria;
+import ui.catalogue.domain.model.sales.product.identifier.SalesProductCode;
 import ui.catalogue.domain.model.sales.product.identifier.SalesProductId;
 import ui.catalogue.domain.model.sales.product.summary.SalesProductSummaries;
 import ui.catalogue.domain.model.sales.product.summary.SalesProductSummary;
@@ -32,7 +33,19 @@ public class SalesProductDataSource implements SalesProductRepository {
     }
 
     @Override
+    public void register(SalesProduct salesProduct) {
+        SalesProductId salesProductId = SalesProductId.newSalesProductId();
+        SalesProductCode salesProductCode = new SalesProductCode(String.valueOf(salesProductMapper.newSalesProductCode()));
+        salesProductMapper.registerSalesProduct(salesProductId, salesProductCode);
+        registerNewRevisionOf(salesProduct, salesProductId);
+    }
+
+    @Override
     public void update(SalesProductId salesProductId, SalesProduct salesProduct) {
+        registerNewRevisionOf(salesProduct, salesProductId);
+    }
+
+    private void registerNewRevisionOf(SalesProduct salesProduct, SalesProductId salesProductId) {
         UUID revision = UUID.randomUUID();
         salesProductMapper.registerRevision(salesProductId, revision);
         salesProductMapper.registerSalesProductContent(salesProductId, revision, salesProduct);

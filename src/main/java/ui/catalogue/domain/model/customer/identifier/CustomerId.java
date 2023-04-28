@@ -17,7 +17,7 @@ public final class CustomerId {
         return value;
     }
 
-    public static CustomerId newSCustomerId() {
+    public static CustomerId newCustomerId() {
         return new CustomerId(UUID.randomUUID().toString());
     }
 

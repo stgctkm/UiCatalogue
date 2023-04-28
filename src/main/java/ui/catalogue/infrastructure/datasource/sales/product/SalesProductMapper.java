@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import ui.catalogue.domain.model.sales.product.SalesProduct;
 import ui.catalogue.domain.model.sales.product.criteria.SalesProductSearchCriteria;
+import ui.catalogue.domain.model.sales.product.identifier.SalesProductCode;
 import ui.catalogue.domain.model.sales.product.identifier.SalesProductId;
 import ui.catalogue.domain.model.sales.product.summary.SalesProductSummary;
 
@@ -17,6 +18,10 @@ interface SalesProductMapper {
 
     SalesProduct salesProductOf(
             @Param("salesProductId") SalesProductId salesProductId);
+
+    void registerSalesProduct(
+            @Param("salesProductId") SalesProductId salesProductId,
+            @Param("salesProductCode") SalesProductCode salesProductCode);
 
     void registerRevision(
             @Param("salesProductId") SalesProductId salesProductId,
@@ -33,4 +38,6 @@ interface SalesProductMapper {
     void registerActive(
             @Param("salesProductId") SalesProductId salesProductId,
             @Param("revision") UUID revision);
+
+    long newSalesProductCode();
 }
