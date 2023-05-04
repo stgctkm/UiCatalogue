@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ui.catalogue.infrastructure.datasource.sales.order.SalesOrderMapper">
+
+    <select id="summaries" resultType="ui.catalogue.domain.model.sales.order.summary.SalesOrderSummary">
+        SELECT
+        受注.受注ID AS "salesOrderId.value",
+        受注.受注番号 AS "salesOrderNumber.value",
+        顧客名称.顧客名 AS "customerName.name",
+        受注.受注日 AS "salesOrderDate.date.value"
+        FROM 受注.受注
+        INNER JOIN 受注.受注顧客 ON 受注.受注ID = 受注顧客.受注ID
+        INNER JOIN 顧客.顧客 ON 受注顧客.顧客ID = 顧客.顧客ID
+        INNER JOIN 顧客.顧客リビジョン ON 顧客.顧客ID = 顧客リビジョン.顧客ID
+        INNER JOIN 顧客._現在の顧客リビジョン ON 顧客リビジョン.顧客ID = _現在の顧客リビジョン.顧客ID AND 顧客リビジョン.リビジョン =
+        _現在の顧客リビジョン.リビジョン
+        INNER JOIN 顧客.顧客名称 ON 顧客リビジョン.顧客ID = 顧客名称.顧客ID AND 顧客リビジョン.リビジョン = 顧客名称.リビジョン
+        <where>
+            (
+            顧客名称.顧客名 LIKE CONCAT('%', #{criteria.customerName}, '%')
+            OR 顧客名称.顧客名カナ LIKE CONCAT('%', #{criteria.customerName}, '%')
+            )
+            <if test="!criteria.from.isEmpty()">
+                <![CDATA[
+                  AND #{criteria.from.value} <= 受注日
+                ]]>
+            </if>
+            <if test="!criteria.to.isEmpty()">
+                <![CDATA[
+                  AND 受注日 <= #{criteria.to.value}
+                ]]>
+            </if>
+        </where>
+
+
+    </select>
+
+    <select id="salesOrderOf" resultType="ui.catalogue.domain.model.sales.order.SalesOrder">
+        SELECT *
+        FROM 受注.受注
+                 INNER JOIN 受注.受注顧客 ON 受注.受注ID = 受注顧客.受注ID
+                 INNER JOIN 受注.受注明細 ON 受注.受注ID = 受注明細.受注ID
+                 INNER JOIN 顧客.顧客 ON 受注顧客.顧客ID = 顧客.顧客ID
+                 INNER JOIN 顧客.顧客リビジョン ON 顧客.顧客ID = 顧客リビジョン.顧客ID
+                 INNER JOIN 顧客._現在の顧客リビジョン
+                            ON 顧客リビジョン.顧客ID = _現在の顧客リビジョン.顧客ID AND 顧客リビジョン.リビジョン = _現在の顧客リビジョン.リビジョン
+                 INNER JOIN 顧客.顧客名称 ON 顧客リビジョン.顧客ID = 顧客名称.顧客ID AND 顧客リビジョン.リビジョン = 顧客名称.リビジョン
+        WHERE 受注.受注ID = #{salesOrderId.value}
+
+    </select>
+</mapper>

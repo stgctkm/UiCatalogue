@@ -49,24 +49,6 @@
         WHERE 顧客ID = #{customerId.value}
     </delete>
 
-    <!--    <select id="summaries" resultType="guide.tm.domain.model.customer.CustomerSummary">-->
-    <!--        SELECT-->
-    <!--            顧客ID AS "customerId.value",-->
-    <!--            顧客名 AS "name.value"-->
-    <!--        FROM 顧客.顧客-->
-    <!--    </select>-->
-
-    <!--    <resultMap id="SingleAllocation" type="guide.tm.domain.model.allocation.single.SingleAllocation">-->
-    <!--        <id property="singleAllocationNumber.value" column="引当番号"/>-->
-    <!--        <result property="salesOrderNumber.value" column="受注番号"/>-->
-    <!--        <result property="salesOrderItemNumber.value" column="受注明細番号"/>-->
-    <!--        <result property="productAllocation.productCode.value" column="商品コード"/>-->
-    <!--        <collection property="productAllocation.allocatedLocations.list" ofType="guide.tm.domain.model.allocation.location.AllocatedLocation">-->
-    <!--            <result property="wareHouseCode.value" column="倉庫コード"/>-->
-    <!--            <result property="allocatedQuantity.value" column="引当数量"/>-->
-    <!--        </collection>-->
-    <!--    </resultMap>-->
-
     <resultMap id="customerId" type="ui.catalogue.domain.model.customer.identifier.CustomerId">
         <constructor>
             <idArg javaType="string" column="顧客ID"/>
@@ -99,7 +81,7 @@
         </constructor>
     </resultMap>
 
-    <resultMap id="postalCode" type="ui.catalogue.domain.model.customer.contact.address.PostalCode">
+    <resultMap id="postalCode" type="ui.catalogue.domain.primitive.contact.address.PostalCode">
         <constructor>
             <arg javaType="string" column="郵便番号"/>
         </constructor>
@@ -108,16 +90,16 @@
     <resultMap id="contact" type="ui.catalogue.domain.model.customer.contact.Contact">
         <constructor>
             <arg resultMap="email" javaType="ui.catalogue.domain.model.customer.contact.Email"/>
-            <arg resultMap="address" javaType="ui.catalogue.domain.model.customer.contact.address.Address"/>
+            <arg resultMap="address" javaType="ui.catalogue.domain.primitive.contact.address.Address"/>
             <arg resultMap="phoneNumber" javaType="ui.catalogue.domain.primitive.contact.phone.PhoneNumber"/>
             <arg javaType="string" column="担当者名"/>
             <arg javaType="string" column="担当部署"/>
         </constructor>
     </resultMap>
 
-    <resultMap id="address" type="ui.catalogue.domain.model.customer.contact.address.Address">
+    <resultMap id="address" type="ui.catalogue.domain.primitive.contact.address.Address">
         <constructor>
-            <arg resultMap="postalCode" javaType="ui.catalogue.domain.model.customer.contact.address.PostalCode"/>
+            <arg resultMap="postalCode" javaType="ui.catalogue.domain.primitive.contact.address.PostalCode"/>
             <arg javaType="string" column="住所"/>
             <arg javaType="string" column="建物"/>
         </constructor>

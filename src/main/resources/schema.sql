@@ -181,3 +181,52 @@ CREATE TABLE 仕入.商品仕入先
     作成日時       TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 -- </editor-fold>
+
+
+-- <editor-fold desc="受注スキーマ">
+CREATE SCHEMA 受注;
+CREATE TABLE 受注.受注
+(
+    受注ID   UUID       NOT NULL,
+    受注番号 VARCHAR(8) NOT NULL UNIQUE,
+    受注日   DATE       NOT NULL,
+    PRIMARY KEY (受注ID),
+    作成日時 TIMESTAMP  NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE 受注.受注顧客
+(
+    受注ID   UUID        NOT NULL,
+    顧客ID   UUID        NOT NULL,
+    郵便番号 VARCHAR(8)  NOT NULL,
+    住所     VARCHAR(40) NOT NULL,
+    建物     VARCHAR(40) NOT NULL,
+    FOREIGN KEY (受注ID) REFERENCES 受注.受注 (受注ID),
+    FOREIGN KEY (顧客ID) REFERENCES 顧客.顧客 (顧客ID),
+    作成日時 TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE SEQUENCE 受注.受注番号 START WITH 13200000 NO CYCLE;
+
+CREATE TABLE 受注.受注明細
+(
+    受注ID       UUID       NOT NULL,
+    受注明細番号 UUID       NOT NULL,
+    販売商品ID   UUID       NOT NULL,
+    受注数量     NUMERIC(3) NOT NULL,
+    PRIMARY KEY (受注ID, 受注明細番号),
+    FOREIGN KEY (受注ID) REFERENCES 受注.受注 (受注ID),
+    FOREIGN KEY (販売商品ID) REFERENCES 販売.販売商品 (販売商品ID),
+    作成日時     TIMESTAMP  NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE 受注.有効な受注明細
+(
+    受注ID       UUID      NOT NULL,
+    受注明細番号 UUID      NOT NULL,
+    PRIMARY KEY (受注ID, 受注明細番号),
+    FOREIGN KEY (受注ID, 受注明細番号) REFERENCES 受注.受注明細 (受注ID, 受注明細番号),
+    作成日時     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- </editor-fold>

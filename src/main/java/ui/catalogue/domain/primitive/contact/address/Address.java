@@ -1,4 +1,4 @@
-package ui.catalogue.domain.model.customer.contact.address;
+package ui.catalogue.domain.primitive.contact.address;
 
 /**
  * 住所
