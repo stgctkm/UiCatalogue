@@ -1,4 +1,4 @@
-package ui.catalogue.domain.model.customer.contact.phone;
+package ui.catalogue.domain.primitive.contact.phone;
 
 /**
  * 電話番号

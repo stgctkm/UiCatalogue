@@ -1,7 +1,7 @@
 package ui.catalogue.domain.model.customer.contact;
 
 import ui.catalogue.domain.model.customer.contact.address.Address;
-import ui.catalogue.domain.model.customer.contact.phone.PhoneNumber;
+import ui.catalogue.domain.primitive.contact.phone.PhoneNumber;
 
 /**
  * 連絡先

@@ -126,3 +126,58 @@ CREATE TABLE 販売.販売商品内容
 CREATE SEQUENCE 販売.販売商品コード START WITH 789012481 NO CYCLE;
 
 -- </editor-fold>
+
+-- <editor-fold desc="仕入スキーマ">
+CREATE SCHEMA 仕入;
+
+CREATE TABLE 仕入.仕入商品
+(
+    仕入商品ID  UUID        NOT NULL,
+    仕入商品コード VARCHAR(10) NOT NULL,
+    PRIMARY KEY (仕入商品ID),
+    UNIQUE (仕入商品コード),
+    作成日時    TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE 仕入.仕入商品リビジョン
+(
+    仕入商品ID UUID      NOT NULL,
+    リビジョン      UUID      NOT NULL,
+    PRIMARY KEY (仕入商品ID, リビジョン),
+    FOREIGN KEY (仕入商品ID) REFERENCES 仕入.仕入商品 (仕入商品ID),
+    作成日時   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE 仕入._現在の仕入商品リビジョン
+(
+    仕入商品ID UUID      NOT NULL,
+    リビジョン      UUID      NOT NULL,
+    PRIMARY KEY (仕入商品ID, リビジョン),
+    FOREIGN KEY (仕入商品ID, リビジョン) REFERENCES 仕入.仕入商品リビジョン (仕入商品ID, リビジョン),
+    作成日時   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE 仕入.仕入商品内容
+(
+    仕入商品ID UUID        NOT NULL,
+    リビジョン      UUID        NOT NULL,
+    商品名称   VARCHAR(40) NOT NULL,
+    仕入価格   NUMERIC(7)  NOT NULL,
+    PRIMARY KEY (仕入商品ID, リビジョン),
+    FOREIGN KEY (仕入商品ID, リビジョン) REFERENCES 仕入.仕入商品リビジョン (仕入商品ID, リビジョン),
+    作成日時   TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE 仕入.商品仕入先
+(
+    仕入商品ID     UUID        NOT NULL,
+    リビジョン          UUID        NOT NULL,
+    仕入先名称     VARCHAR(40) NOT NULL,
+    仕入先担当者   VARCHAR(20) NOT NULL,
+    仕入先電話番号 VARCHAR(15) NOT NULL,
+    PRIMARY KEY (仕入商品ID, リビジョン),
+    FOREIGN KEY (仕入商品ID, リビジョン) REFERENCES 仕入.仕入商品リビジョン (仕入商品ID, リビジョン),
+    作成日時       TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+-- </editor-fold>

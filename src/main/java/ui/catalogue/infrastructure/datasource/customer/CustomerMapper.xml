@@ -93,7 +93,7 @@
     </resultMap>
 
 
-    <resultMap id="phoneNumber" type="ui.catalogue.domain.model.customer.contact.phone.PhoneNumber">
+    <resultMap id="phoneNumber" type="ui.catalogue.domain.primitive.contact.phone.PhoneNumber">
         <constructor>
             <arg javaType="string" column="電話番号"/>
         </constructor>
@@ -109,7 +109,7 @@
         <constructor>
             <arg resultMap="email" javaType="ui.catalogue.domain.model.customer.contact.Email"/>
             <arg resultMap="address" javaType="ui.catalogue.domain.model.customer.contact.address.Address"/>
-            <arg resultMap="phoneNumber" javaType="ui.catalogue.domain.model.customer.contact.phone.PhoneNumber"/>
+            <arg resultMap="phoneNumber" javaType="ui.catalogue.domain.primitive.contact.phone.PhoneNumber"/>
             <arg javaType="string" column="担当者名"/>
             <arg javaType="string" column="担当部署"/>
         </constructor>
@@ -128,7 +128,7 @@
             <idArg resultMap="customerId" javaType="ui.catalogue.domain.model.customer.identifier.CustomerId"/>
             <arg resultMap="customerNumber" javaType="ui.catalogue.domain.model.customer.identifier.CustomerNumber"/>
             <arg resultMap="customerName" javaType="ui.catalogue.domain.model.customer.identifier.CustomerName"/>
-            <arg resultMap="phoneNumber" javaType="ui.catalogue.domain.model.customer.contact.phone.PhoneNumber"/>
+            <arg resultMap="phoneNumber" javaType="ui.catalogue.domain.primitive.contact.phone.PhoneNumber"/>
         </constructor>
     </resultMap>
 

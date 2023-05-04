@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ui.catalogue.infrastructure.datasource.purchase.product.PurchaseProductMapper">
+
+    <select id="purchaseProductOf" resultType="ui.catalogue.domain.model.purchase.product.PurchaseProduct">
+        SELECT 仕入商品.仕入商品コード      AS "purchaseProductCode.value",
+               仕入商品内容.商品名称     AS "purchaseProductName.value",
+               仕入商品内容.仕入価格     AS "purchasePrice.amount.value",
+               商品仕入先.仕入先名称     AS "supplier.name",
+               商品仕入先.仕入先担当者   AS "supplier.personInCharge",
+               商品仕入先.仕入先電話番号 AS "supplier.phoneNumber.value"
+        FROM 仕入.仕入商品
+                 INNER JOIN 仕入.仕入商品リビジョン ON 仕入商品.仕入商品ID = 仕入商品リビジョン.仕入商品ID
+                 INNER JOIN 仕入._現在の仕入商品リビジョン ON 仕入商品.仕入商品ID = _現在の仕入商品リビジョン.仕入商品ID
+                 INNER JOIN 仕入.仕入商品内容
+                            ON 仕入商品リビジョン.仕入商品ID = 仕入商品内容.仕入商品ID AND 仕入商品リビジョン.リビジョン = 仕入商品内容.リビジョン
+                 INNER JOIN 仕入.商品仕入先
+                            ON 仕入商品リビジョン.仕入商品ID = 商品仕入先.仕入商品ID AND 仕入商品リビジョン.リビジョン = 商品仕入先.リビジョン
+        WHERE 仕入商品.仕入商品コード = #{purchaseProductCode.value}
+
+    </select>
+
+</mapper>
