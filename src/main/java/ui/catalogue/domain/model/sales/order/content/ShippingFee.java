@@ -1,7 +1,7 @@
 package ui.catalogue.domain.model.sales.order.content;
 
 
-import ui.catalogue.domain.primitive.Amount;
+import ui.catalogue.domain.primitive.amount.Amount;
 
 import java.math.BigDecimal;
 

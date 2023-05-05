@@ -5,7 +5,7 @@ import ui.catalogue.domain.model.sales.order.content.SalesOrderDate;
 import ui.catalogue.domain.model.sales.order.content.ShippingFee;
 import ui.catalogue.domain.model.sales.order.identifier.SalesOrderNumber;
 import ui.catalogue.domain.model.sales.order.item.SalesOrderItems;
-import ui.catalogue.domain.primitive.Amount;
+import ui.catalogue.domain.primitive.amount.Amount;
 import ui.catalogue.domain.primitive.contact.address.Address;
 
 /**

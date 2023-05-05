@@ -1,4 +1,4 @@
-package ui.catalogue.domain.primitive;
+package ui.catalogue.domain.primitive.amount;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

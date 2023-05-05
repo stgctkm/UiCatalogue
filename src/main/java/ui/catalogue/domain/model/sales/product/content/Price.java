@@ -1,6 +1,6 @@
 package ui.catalogue.domain.model.sales.product.content;
 
-import ui.catalogue.domain.primitive.Amount;
+import ui.catalogue.domain.primitive.amount.Amount;
 
 /**
  * 価格

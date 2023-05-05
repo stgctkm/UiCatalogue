@@ -1,8 +1,8 @@
 package ui.catalogue.domain.model.sales.order.item;
 
 import ui.catalogue.domain.model.sales.product.SalesProduct;
-import ui.catalogue.domain.primitive.Amount;
 import ui.catalogue.domain.primitive.Quantity;
+import ui.catalogue.domain.primitive.amount.Amount;
 
 /**
  * 受注明細

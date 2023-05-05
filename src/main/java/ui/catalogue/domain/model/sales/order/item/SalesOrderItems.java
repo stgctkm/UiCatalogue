@@ -1,8 +1,8 @@
 package ui.catalogue.domain.model.sales.order.item;
 
-import ui.catalogue.domain.primitive.Amount;
-import ui.catalogue.domain.primitive.Rate;
-import ui.catalogue.domain.primitive.TotalAmount;
+import ui.catalogue.domain.primitive.amount.Amount;
+import ui.catalogue.domain.primitive.amount.Rate;
+import ui.catalogue.domain.primitive.amount.TotalAmount;
 
 import java.math.BigDecimal;
 import java.util.List;
