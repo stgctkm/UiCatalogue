@@ -5,6 +5,8 @@ import ui.catalogue.application.service.sales.order.SalesOrderRepository;
 import ui.catalogue.domain.model.sales.order.SalesOrder;
 import ui.catalogue.domain.model.sales.order.criteria.SalesOrderCriteria;
 import ui.catalogue.domain.model.sales.order.identifier.SalesOrderId;
+import ui.catalogue.domain.model.sales.order.item.SalesOrderItem;
+import ui.catalogue.domain.model.sales.order.item.SalesOrderItems;
 import ui.catalogue.domain.model.sales.order.summary.SalesOrderSummaries;
 import ui.catalogue.domain.model.sales.order.summary.SalesOrderSummary;
 
@@ -27,6 +29,8 @@ public class SalesOrderDataSource implements SalesOrderRepository {
 
     @Override
     public SalesOrder salesOrderOf(SalesOrderId salesOrderId) {
-        return salesOrderMapper.salesOrderOf(salesOrderId);
+        SalesOrder salesOrder = salesOrderMapper.salesOrderOf(salesOrderId);
+        List<SalesOrderItem> items = salesOrderMapper.salesOrderItemsOf(salesOrderId);
+        return new SalesOrder(salesOrder, new SalesOrderItems(items));
     }
 }

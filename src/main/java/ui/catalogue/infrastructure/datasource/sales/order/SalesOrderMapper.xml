@@ -38,10 +38,15 @@
     </select>
 
     <select id="salesOrderOf" resultType="ui.catalogue.domain.model.sales.order.SalesOrder">
-        SELECT *
+        SELECT 受注.受注番号     AS "salesOrderNumber.value",
+               受注.受注日       AS "salesOrderDate.date.value",
+               顧客名称.顧客名   AS "customer.customerName.name",
+               受注顧客.郵便番号 AS "shippingAddress.postalCode.value",
+               受注顧客.住所     AS "shippingAddress.addressLine",
+               受注顧客.建物     AS "shippingAddress.building"
+
         FROM 受注.受注
                  INNER JOIN 受注.受注顧客 ON 受注.受注ID = 受注顧客.受注ID
-                 INNER JOIN 受注.受注明細 ON 受注.受注ID = 受注明細.受注ID
                  INNER JOIN 顧客.顧客 ON 受注顧客.顧客ID = 顧客.顧客ID
                  INNER JOIN 顧客.顧客リビジョン ON 顧客.顧客ID = 顧客リビジョン.顧客ID
                  INNER JOIN 顧客._現在の顧客リビジョン
@@ -50,4 +55,33 @@
         WHERE 受注.受注ID = #{salesOrderId.value}
 
     </select>
+
+    <select id="salesOrderItemsOf" resultType="ui.catalogue.domain.model.sales.order.item.SalesOrderItem">
+        SELECT 販売商品.販売商品コード    AS "salesProduct.salesProductCode.value",
+               販売商品内容.商品名称   AS "salesProduct.salesProductName.name",
+               販売商品内容.商品略称   AS "salesProduct.salesProductName.abbreviation",
+               販売商品内容.販売開始日 AS "salesProduct.salesPeriod.from.value",
+               販売商品内容.販売終了日 AS "salesProduct.salesPeriod.to.value",
+               販売商品内容.販売価格   AS "salesProduct.price.retailPrice.value",
+               販売商品内容.定価       AS "salesProduct.price.listPrice.value",
+               販売商品内容.色         AS "salesProduct.color",
+               販売商品内容.サイズ        AS "salesProduct.size",
+               販売商品内容.説明       AS "salesProduct.description",
+               販売商品内容.備考       AS "salesProduct.remark",
+               受注明細.受注数量       AS "quantity.value"
+        FROM 受注.受注
+                 INNER JOIN 受注.受注明細 ON 受注.受注ID = 受注明細.受注ID
+                 INNER JOIN 受注.有効な受注明細
+                            ON 受注明細.受注ID = 有効な受注明細.受注ID AND 受注明細.受注明細番号 = 有効な受注明細.受注明細番号
+                 INNER JOIN 販売.販売商品 ON 受注明細.販売商品ID = 販売商品.販売商品ID
+                 INNER JOIN 販売.販売商品リビジョン ON 販売商品.販売商品ID = 販売商品リビジョン.販売商品ID
+                 INNER JOIN 販売._現在の販売商品リビジョン
+                            ON 販売商品リビジョン.販売商品ID = _現在の販売商品リビジョン.販売商品ID
+                                AND 販売商品リビジョン.リビジョン = _現在の販売商品リビジョン.リビジョン
+                 INNER JOIN 販売.販売商品内容
+                            ON 販売商品リビジョン.販売商品ID = 販売商品内容.販売商品ID
+                                AND 販売商品リビジョン.リビジョン = 販売商品内容.リビジョン
+        WHERE 受注.受注ID = #{salesOrderId.value}
+    </select>
+
 </mapper>

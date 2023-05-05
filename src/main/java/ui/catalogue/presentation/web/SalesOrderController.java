@@ -25,7 +25,6 @@ public class SalesOrderController {
 
     @GetMapping
     String start(@ModelAttribute("salesOrderCriteria") SalesOrderCriteria criteria) {
-//        return "sales-orders/search";
         return "sales-orders/search-and-list";
     }
 

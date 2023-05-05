@@ -29,5 +29,10 @@ public class Address {
     public String building() {
         return building;
     }
+
+    @Override
+    public String toString() {
+        return "%s %s %s".formatted(postalCode, addressLine, building);
+    }
 }
 

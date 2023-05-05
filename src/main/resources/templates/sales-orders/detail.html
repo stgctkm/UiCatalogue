@@ -22,7 +22,7 @@
           <div class="d-flex gap-2 w-100 justify-content-between">
             <div>
               <h6 class="mb-0 opacity-75">受注番号</h6>
-              <p class="mb-0">12345678</p>
+              <p class="mb-0" th:text="${salesOrder.salesOrderNumber}">12345678</p>
             </div>
           </div>
         </div>
@@ -31,7 +31,7 @@
           <div class="d-flex gap-2 w-100 justify-content-between">
             <div>
               <h6 class="mb-0 opacity-75">顧客名</h6>
-              <p class="mb-0">アナハイム・エレクトロニクス</p>
+              <p class="mb-0" th:text="${salesOrder.customer.customerName.name}">アナハイム・エレクトロニクス</p>
             </div>
           </div>
         </div>
@@ -40,7 +40,7 @@
           <div class="d-flex gap-2 w-100 justify-content-between">
             <div>
               <h6 class="mb-0 opacity-75">受注日</h6>
-              <p class="mb-0">2023-01-10</p>
+              <p class="mb-0" th:text="${salesOrder.salesOrderDate}">2023-01-10</p>
             </div>
           </div>
         </div>
@@ -49,7 +49,7 @@
           <div class="d-flex gap-2 w-100 justify-content-between">
             <div>
               <h6 class="mb-0 opacity-75">届け先住所</h6>
-              <p class="mb-0">東京都 千代田区1-1-1</p>
+              <p class="mb-0" th:text="${salesOrder.shippingAddress}">東京都 千代田区1-1-1</p>
             </div>
           </div>
         </div>
@@ -63,7 +63,7 @@
           <div class="d-flex gap-2 w-100 justify-content-between">
             <div>
               <h6 class="mb-0 opacity-75">受注金額</h6>
-              <p class="mb-0">120,153</p>
+              <p class="mb-0" th:text="${salesOrder.totalAmount}">120,153</p>
             </div>
           </div>
         </div>
@@ -72,7 +72,7 @@
           <div class="d-flex gap-2 w-100 justify-content-between">
             <div>
               <h6 class="mb-0 opacity-75">税抜き金額</h6>
-              <p class="mb-0">109,230</p>
+              <p class="mb-0" th:text="${salesOrder.amountExcludingTax()}">109,230</p>
             </div>
           </div>
         </div>
@@ -81,7 +81,7 @@
           <div class="d-flex gap-2 w-100 justify-content-between">
             <div>
               <h6 class="mb-0 opacity-75">消費税</h6>
-              <p class="mb-0">10,923</p>
+              <p class="mb-0" th:text="${salesOrder.tax}">10,923</p>
             </div>
           </div>
         </div>
@@ -90,7 +90,7 @@
           <div class="d-flex gap-2 w-100 justify-content-between">
             <div>
               <h6 class="mb-0 opacity-75">送料</h6>
-              <p class="mb-0">0</p>
+              <p class="mb-0" th:text="${salesOrder.shippingFee}">0</p>
             </div>
           </div>
         </div>
@@ -99,7 +99,7 @@
   </div>
 
 
-  <table class="table table-striped table-hover mt-4">
+  <table class="table table-striped table-hover mt-4" th:if="${salesOrder.salesOrderItems}">
     <thead>
     <tr>
       <th></th>
@@ -109,14 +109,15 @@
     </tr>
     </thead>
     <tbody>
-    <tr class="align-middle">
+    <tr class="align-middle" th:each="item : ${salesOrder.salesOrderItems.list}">
       <td class="text-center">
         <i class="bi bi-bag-check"></i>
       </td>
-      <td>アルパイン テックグローブ</td>
-      <td class="text-end">2</td>
-      <td class="text-end">19,690</td>
+      <td th:text="${item.salesProduct.salesProductName.name}">アルパイン テックグローブ</td>
+      <td class="text-end" th:text="${item.quantity}">2</td>
+      <td class="text-end" th:text="${item.salesProduct.price.retailPrice}">19,690</td>
     </tr>
+    <!--/*
     <tr class="align-middle">
       <td class="text-center">
         <i class="bi bi-bag-check"></i>
@@ -141,15 +142,20 @@
       <td class="text-end">1</td>
       <td class="text-end">14,960</td>
     </tr>
-
+    */-->
     </tbody>
     <tfoot>
     </tfoot>
   </table>
 
-  <a th:href="@{/sales-orders?(q=)}" class="btn btn-outline-primary">戻る</a>
+  <button class="btn btn-outline-primary" id="cancel" type="button">戻る</button>
 </div>
 
 
+<script>
+  document.getElementById("cancel").addEventListener("click", () => {
+    window.history.back();
+  })
+</script>
 </body>
 </html>
