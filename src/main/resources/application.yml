@@ -1,3 +1,6 @@
+mybatis:
+  config-location: classpath:mybatis.xml
+
 spring:
   jackson:
     visibility:

@@ -188,9 +188,10 @@ CREATE SCHEMA 受注;
 CREATE TABLE 受注.受注
 (
     受注ID   UUID       NOT NULL,
-    受注番号 VARCHAR(8) NOT NULL UNIQUE,
+    受注番号 VARCHAR(8) NOT NULL,
     受注日   DATE       NOT NULL,
     PRIMARY KEY (受注ID),
+    UNIQUE (受注番号),
     作成日時 TIMESTAMP  NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -229,4 +230,53 @@ CREATE TABLE 受注.有効な受注明細
     作成日時     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+-- </editor-fold>
+
+
+-- <editor-fold desc="請求スキーマ">
+CREATE SCHEMA 請求;
+
+CREATE SEQUENCE 請求.請求番号 START WITH 86300000 NO CYCLE;
+
+CREATE TABLE 請求.請求
+(
+    請求ID   UUID        NOT NULL,
+    請求番号 VARCHAR(10) NOT NULL,
+    請求日   DATE        NOT NULL,
+    顧客ID   UUID        NOT NULL,
+    受注年月 DATE        NOT NULL,
+    PRIMARY KEY (請求ID),
+    UNIQUE (顧客ID),
+    FOREIGN KEY (顧客ID) REFERENCES 顧客.顧客 (顧客ID),
+    作成日時 TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE 請求.請求済受注
+(
+    請求ID   uuid       NOT NULL,
+    受注ID   uuid       NOT NULL,
+    受注金額 NUMERIC(7) NOT NULL,
+    PRIMARY KEY (請求ID, 受注ID),
+    FOREIGN KEY (請求ID) REFERENCES 請求.請求 (請求ID),
+    FOREIGN KEY (受注ID) REFERENCES 受注.受注 (受注ID),
+    作成日時 TIMESTAMP  NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- CREATE TABLE 請求._未請求受注
+-- (
+--     受注ID uuid NOT NULL,
+--     PRIMARY KEY (受注ID),
+--     FOREIGN KEY (受注ID) REFERENCES 受注.受注 (受注ID),
+--     作成日時 TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+-- );
+--
+-- CREATE TABLE 請求.請求済受注
+-- (
+--     請求ID uuid NOT NULL,
+--     受注ID uuid NOT NULL,
+--     PRIMARY KEY (請求ID, 受注ID),
+--     FOREIGN KEY (請求ID) REFERENCES 請求.請求 (請求ID),
+--     FOREIGN KEY (受注ID) REFERENCES 受注.受注 (受注ID),
+--     作成日時 TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+-- );
 -- </editor-fold>

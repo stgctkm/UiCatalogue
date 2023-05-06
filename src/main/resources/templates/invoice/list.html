@@ -28,77 +28,13 @@
       <th>受注年月</th>
     </tr>
     </thead>
-    <tbody id="invoice-list" >
-    <tr class="align-middle">
-      <td >1891828290</td>
-      <td ><span>2023-03-31</span></td>
-      <td ><span>アナハイム・エレクトロニクス</span></td>
-      <td ><span>2023-03</span></td>
-    </tr>
-    <tr class="align-middle">
-      <td >1891828290</td>
-      <td ><span>2023-03-31</span></td>
-      <td ><span>アナハイム・エレクトロニクス</span></td>
-      <td ><span>2023-03</span></td>
-    </tr>
-    <tr class="align-middle">
-      <td >1891828290</td>
-      <td ><span>2023-03-31</span></td>
-      <td ><span>アナハイム・エレクトロニクス</span></td>
-      <td ><span>2023-03</span></td>
-    </tr>
-    <tr class="align-middle">
-      <td >1891828290</td>
-      <td ><span>2023-03-31</span></td>
-      <td ><span>アナハイム・エレクトロニクス</span></td>
-      <td ><span>2023-03</span></td>
-    </tr>
-    <tr class="align-middle">
-      <td >1891828290</td>
-      <td ><span>2023-03-31</span></td>
-      <td ><span>アナハイム・エレクトロニクス</span></td>
-      <td ><span>2023-03</span></td>
-    </tr>
-    <tr class="align-middle">
-      <td >1891828290</td>
-      <td ><span>2023-03-31</span></td>
-      <td ><span>アナハイム・エレクトロニクス</span></td>
-      <td ><span>2023-03</span></td>
-    </tr>  <tr class="align-middle">
-      <td >1891828290</td>
-      <td ><span>2023-03-31</span></td>
-      <td ><span>アナハイム・エレクトロニクス</span></td>
-      <td ><span>2023-03</span></td>
-    </tr>
-    <tr class="align-middle">
-      <td >1891828290</td>
-      <td ><span>2023-03-31</span></td>
-      <td ><span>アナハイム・エレクトロニクス</span></td>
-      <td ><span>2023-03</span></td>
-    </tr>
-    <tr class="align-middle">
-      <td >1891828290</td>
-      <td ><span>2023-03-31</span></td>
-      <td ><span>アナハイム・エレクトロニクス</span></td>
-      <td ><span>2023-03</span></td>
-    </tr>
-    <tr class="align-middle">
-      <td >1891828290</td>
-      <td ><span>2023-03-31</span></td>
-      <td ><span>アナハイム・エレクトロニクス</span></td>
-      <td ><span>2023-03</span></td>
-    </tr>
-    <tr class="align-middle">
-      <td >1891828290</td>
-      <td ><span>2023-03-31</span></td>
-      <td ><span>アナハイム・エレクトロニクス</span></td>
-      <td ><span>2023-03</span></td>
-    </tr>
-    <tr class="align-middle">
-      <td >1891828290</td>
-      <td ><span>2023-03-31</span></td>
-      <td ><span>アナハイム・エレクトロニクス</span></td>
-      <td ><span>2023-03</span></td>
+    <tbody id="invoice-list">
+    <tr class="align-middle" th:each="summary: ${summaries.list}">
+      <td><a th:href="@{|/invoices/${summary.invoiceId}|}"><span
+          th:text="${summary.invoiceNumber}">1891828290</span></a></td>
+      <td><span th:text="${summary.invoiceDate}">2023-03-31</span></td>
+      <td><span th:text="${summary.customerName.name}">アナハイム・エレクトロニクス</span></td>
+      <td><span th:text="${summary.orderedYearMonth}">2023-03</span></td>
     </tr>
 
     </tbody>
@@ -106,11 +42,13 @@
   </div>
 
 </div>
-<form id="to-detail-form" method="get" th:action="@{/invoices/detail}"></form>
-<script>
-  document.getElementById("invoice-list").addEventListener('click', () => {
-    document.getElementById('to-detail-form').submit()
-  })
-</script>
+<form id="to-detail-form" method="get" th:action="@{/invoices/detail}">
+  <input id="invoice-id" name="invoiceId" type="hidden">
+</form>
+<!--<script>-->
+<!--  document.getElementById("invoice-list").addEventListener('click', (event) => {-->
+<!--    document.getElementById('to-detail-form').submit()-->
+<!--  })-->
+<!--</script>-->
 </body>
 </html>

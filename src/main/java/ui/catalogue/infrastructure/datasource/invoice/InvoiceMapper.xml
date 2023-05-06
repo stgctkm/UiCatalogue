@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ui.catalogue.infrastructure.datasource.invoice.InvoiceMapper">
+
+    <select id="summaries" resultType="ui.catalogue.domain.model.invoice.summary.InvoiceSummary">
+        SELECT 請求.請求ID       AS "invoiceId.value",
+               請求.請求番号     AS "invoiceNumber.value",
+               請求.請求日       AS "invoiceDate.value.value",
+               請求.受注年月     AS "orderedYearMonth.value",
+               顧客.顧客ID       AS "customerId.value",
+               顧客名称.顧客名   AS "customerName.name",
+               顧客名称.顧客名カナ AS "customerName.nameKana"
+        FROM 請求.請求
+                 INNER JOIN 顧客.顧客 ON 請求.顧客ID = 顧客.顧客ID
+                 INNER JOIN 顧客.顧客リビジョン ON 顧客.顧客ID = 顧客リビジョン.顧客ID
+                 INNER JOIN 顧客._現在の顧客リビジョン
+                            ON 顧客リビジョン.顧客ID = _現在の顧客リビジョン.顧客ID AND 顧客リビジョン.リビジョン = _現在の顧客リビジョン.リビジョン
+                 INNER JOIN 顧客.顧客名称 ON 顧客リビジョン.顧客ID = 顧客名称.顧客ID AND 顧客リビジョン.リビジョン = 顧客名称.リビジョン
+
+    </select>
+
+    <select id="invoiceOf" resultType="ui.catalogue.domain.model.invoice.Invoice">
+        SELECT 請求.請求ID,
+               請求.請求番号     AS "invoiceNumber.value",
+               請求.請求日       AS "invoiceDate.value.value",
+               顧客.顧客ID       AS "customer.customerId.value",
+               顧客名称.顧客名   AS "customer.customerName.name",
+               顧客名称.顧客名カナ AS "customer.customerName.nameKana",
+               連絡先.郵便番号   AS "customer.contact.address.postalCode.value",
+               連絡先.住所       AS "customer.contact.address.addressLine",
+               連絡先.建物       AS "customer.contact.address.building",
+               連絡先.電話番号   AS "customer.contact.phoneNumber.value",
+               連絡先.担当者名   AS "customer.contact.personInCharge"
+        FROM 請求.請求
+                 INNER JOIN 顧客.顧客 ON 請求.顧客ID = 顧客.顧客ID
+                 INNER JOIN 顧客.顧客リビジョン ON 顧客.顧客ID = 顧客リビジョン.顧客ID
+                 INNER JOIN 顧客._現在の顧客リビジョン
+                            ON 顧客リビジョン.顧客ID = _現在の顧客リビジョン.顧客ID AND 顧客リビジョン.リビジョン = _現在の顧客リビジョン.リビジョン
+                 INNER JOIN 顧客.顧客名称 ON 顧客リビジョン.顧客ID = 顧客名称.顧客ID AND 顧客リビジョン.リビジョン = 顧客名称.リビジョン
+                 INNER JOIN 顧客.連絡先 ON 顧客リビジョン.顧客ID = 連絡先.顧客ID AND 顧客リビジョン.リビジョン = 連絡先.リビジョン
+        WHERE 請求.請求ID = #{invoiceId.value}
+    </select>
+
+    <select id="invoicedSalesOrder" resultType="ui.catalogue.domain.model.invoice.content.InvoicedSalesOrder">
+        SELECT 請求済受注.受注ID   AS "salesOrderId.value",
+               受注.受注番号       AS "salesOrderNumber.value",
+               受注.受注日         AS "salesOrderDate.date.value",
+               請求済受注.受注金額 AS "orderedAmount.value"
+        FROM 請求.請求済受注
+                 INNER JOIN 受注.受注 ON 請求済受注.受注ID = 受注.受注ID
+        WHERE 請求済受注.請求ID = #{invoiceId.value}
+    </select>
+</mapper>
