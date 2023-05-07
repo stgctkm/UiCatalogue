@@ -261,22 +261,65 @@ CREATE TABLE 請求.請求済受注
     FOREIGN KEY (受注ID) REFERENCES 受注.受注 (受注ID),
     作成日時 TIMESTAMP  NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
-
--- CREATE TABLE 請求._未請求受注
--- (
---     受注ID uuid NOT NULL,
---     PRIMARY KEY (受注ID),
---     FOREIGN KEY (受注ID) REFERENCES 受注.受注 (受注ID),
---     作成日時 TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
--- );
---
--- CREATE TABLE 請求.請求済受注
--- (
---     請求ID uuid NOT NULL,
---     受注ID uuid NOT NULL,
---     PRIMARY KEY (請求ID, 受注ID),
---     FOREIGN KEY (請求ID) REFERENCES 請求.請求 (請求ID),
---     FOREIGN KEY (受注ID) REFERENCES 受注.受注 (受注ID),
---     作成日時 TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
--- );
 -- </editor-fold>
+
+
+-- <editor-fold desc="出荷スキーマ">
+CREATE SCHEMA 出荷;
+CREATE TABLE 出荷.出荷指示
+(
+    出荷指示番号 UUID      NOT NULL,
+    出荷指示日   DATE      NOT NULL,
+    受注ID       UUID      NOT NULL,
+    PRIMARY KEY (出荷指示番号),
+    FOREIGN KEY (受注ID) REFERENCES 受注.受注 (受注ID),
+    作成日時     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE 出荷.出荷
+(
+    出荷番号     UUID       NOT NULL,
+    出荷日       DATE       NOT NULL,
+    出荷指示番号 UUID       NOT NULL,
+    出荷倉庫     VARCHAR(6) NOT NULL,
+    PRIMARY KEY (出荷番号),
+    FOREIGN KEY (出荷指示番号) REFERENCES 出荷.出荷指示 (出荷指示番号),
+    作成日時     TIMESTAMP  NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE 出荷._指示済受注
+(
+    受注ID   UUID      NOT NULL,
+    PRIMARY KEY (受注ID),
+    FOREIGN KEY (受注ID) REFERENCES 受注.受注 (受注ID),
+    作成日時 TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE 出荷._指示残受注
+(
+    受注ID   UUID      NOT NULL,
+    PRIMARY KEY (受注ID),
+    FOREIGN KEY (受注ID) REFERENCES 受注.受注 (受注ID),
+    作成日時 TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+--
+-- CREATE TABLE 出荷._未出荷
+-- (
+--     出荷番号 UUID NOT NULL,
+--     PRIMARY KEY (出荷番号),
+--     FOREIGN KEY (出荷番号) REFERENCES 出荷.出荷指示 (出荷番号),
+--     作成日時 TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+-- );
+
+-- CREATE TABLE 出荷.出荷済
+-- (
+--     出荷番号 UUID NOT NULL,
+--     PRIMARY KEY (出荷番号),
+--     FOREIGN KEY (出荷番号) REFERENCES 出荷.出荷指示 (出荷番号),
+--     作成日時 TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+-- );
+
+-- </editor-fold>
+

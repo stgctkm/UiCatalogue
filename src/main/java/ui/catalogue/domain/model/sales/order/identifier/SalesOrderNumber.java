@@ -3,7 +3,7 @@ package ui.catalogue.domain.model.sales.order.identifier;
 /**
  * 受注番号
  */
-public class SalesOrderNumber {
+public class SalesOrderNumber implements Comparable<SalesOrderNumber> {
     String value;
 
     public SalesOrderNumber() {
@@ -17,5 +17,11 @@ public class SalesOrderNumber {
     @Override
     public String toString() {
         return value;
+    }
+
+
+    @Override
+    public int compareTo(SalesOrderNumber other) {
+        return value.compareTo(other.value);
     }
 }

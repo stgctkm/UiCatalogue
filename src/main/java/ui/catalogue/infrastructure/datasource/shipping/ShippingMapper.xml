@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ui.catalogue.infrastructure.datasource.shipping.ShippingMapper">
+
+    <select id="summariesOfAllInstructed" resultType="ui.catalogue.domain.model.shipping.summary.ShippingSummary">
+        SELECT 出荷.出荷日         AS "shippingDate.date.value",
+               出荷指示.出荷指示日 AS "instructedDate.date.value",
+               受注.受注ID         AS "salesOrderId.value",
+               受注.受注番号       AS "salesOrderNumber.value",
+               受注.受注日         AS "salesOrderDate.date.value",
+               顧客名称.顧客名     AS "customerName.name",
+               '出荷指示済'        AS "shippingStatus"
+        FROM 出荷.出荷
+                 INNER JOIN 出荷.出荷指示 ON 出荷指示.出荷指示番号 = 出荷.出荷指示番号
+                 INNER JOIN 出荷._指示済受注 ON 出荷指示.受注ID = _指示済受注.受注ID
+                 INNER JOIN 受注.受注 ON 出荷指示.受注ID = 受注.受注ID
+                 INNER JOIN 受注.受注顧客 ON 受注.受注ID = 受注顧客.受注ID
+                 INNER JOIN 顧客.顧客 ON 受注顧客.顧客ID = 顧客.顧客ID
+                 INNER JOIN 顧客.顧客リビジョン ON 顧客.顧客ID = 顧客リビジョン.顧客ID
+                 INNER JOIN 顧客._現在の顧客リビジョン
+                            ON 顧客リビジョン.顧客ID = _現在の顧客リビジョン.顧客ID AND 顧客リビジョン.リビジョン = _現在の顧客リビジョン.リビジョン
+                 INNER JOIN 顧客.顧客名称 ON 顧客リビジョン.顧客ID = 顧客名称.顧客ID AND 顧客リビジョン.リビジョン = 顧客名称.リビジョン
+
+    </select>
+
+    <select id="summariesOfNotAllInstructed"
+            resultType="ui.catalogue.domain.model.shipping.summary.ShippingSummary">
+        SELECT 出荷.出荷日         AS "shippingDate.date.value",
+               出荷指示.出荷指示日 AS "instructedDate.date.value",
+               受注.受注ID         AS "salesOrderId.value",
+               受注.受注番号       AS "salesOrderNumber.value",
+               受注.受注日         AS "salesOrderDate.date.value",
+               顧客名称.顧客名     AS "customerName.name",
+               '出荷指示残あり'      AS "shippingStatus"
+        FROM 出荷.出荷
+                 INNER JOIN 出荷.出荷指示 ON 出荷指示.出荷指示番号 = 出荷.出荷指示番号
+                 INNER JOIN 出荷._指示残受注 ON 出荷指示.受注ID = _指示残受注.受注ID
+                 INNER JOIN 受注.受注 ON 出荷指示.受注ID = 受注.受注ID
+                 INNER JOIN 受注.受注顧客 ON 受注.受注ID = 受注顧客.受注ID
+                 INNER JOIN 顧客.顧客 ON 受注顧客.顧客ID = 顧客.顧客ID
+                 INNER JOIN 顧客.顧客リビジョン ON 顧客.顧客ID = 顧客リビジョン.顧客ID
+                 INNER JOIN 顧客._現在の顧客リビジョン
+                            ON 顧客リビジョン.顧客ID = _現在の顧客リビジョン.顧客ID AND 顧客リビジョン.リビジョン = _現在の顧客リビジョン.リビジョン
+                 INNER JOIN 顧客.顧客名称 ON 顧客リビジョン.顧客ID = 顧客名称.顧客ID AND 顧客リビジョン.リビジョン = 顧客名称.リビジョン
+    </select>
+</mapper>

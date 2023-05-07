@@ -22,10 +22,44 @@
       <th class="text-center">顧客名称</th>
       <th class="text-center">出荷指示日</th>
       <th class="text-center">出荷指示状況</th>
-      <th class="text-center">出荷状況</th>
+      <th class="text-center">出荷指示</th>
     </tr>
     </thead>
     <tbody>
+    <tr class="align-middle" th:each="summary: ${summaries.list}">
+      <td class="text-center">
+        <a href="#" th:href="@{|/sales-orders/${summary.salesOrderId}|}"><span th:text="${summary.salesOrderNumber}">12345678978</span></a>
+      </td>
+      <td class="text-center"><span th:text="${summary.salesOrderDate}">2023-04-01</span></td>
+      <td class="text-center"><span th:text="${summary.customerName.name}">アナハイム・ファーム</span></td>
+      <td class="text-center"><span th:text="${summary.instructedDate}">2023-04-01</span></td>
+      <td class="text-center">
+        <h5 th:unless="${summary.shippingStatus.isInstructed}"><span class="badge bg-warning">出荷指示残あり</span></h5>
+        <h5 th:if="${summary.shippingStatus.isInstructed}"><span class="badge bg-success">出荷指示済</span></h5>
+      </td>
+      <td class="text-center">
+        <a th:unless="${summary.shippingStatus.isInstructed}">
+          <button class="btn btn-outline-primary" name="toInstruction" type="button">出荷指示へ</button>
+        </a>
+      </td>
+    </tr>
+    <!--/*
+    <tr class="align-middle">
+      <td class="text-center">
+        <a href="#">12345678978</a>
+      </td>
+      <td class="text-center">2023-04-01</td>
+      <td class="text-center">アナハイム・ファーム</td>
+      <td class="text-center">2021-04-02</td>
+      <td class="text-center">
+        <h5><span class="badge bg-success">出荷指示済</span></h5>
+      </td>
+      <td class="text-center" >
+        <form method="post">
+          <button type="submit" class="btn btn-primary" th:name="reconcile" >出荷済として消し込む</button>
+        </form>
+      </td>
+    </tr>
     <tr class="align-middle">
       <td class="text-center">
         <a href="#">12345678978</a>
@@ -35,6 +69,38 @@
       <td class="text-center">2021-04-02</td>
       <td class="text-center">
         <h5><span class="badge bg-warning">出荷指示残あり</span></h5>
+      </td>
+      <td class="text-center" >
+        <form method="post">
+          <button type="submit" class="btn btn-primary" th:name="reconcile" >出荷済として消し込む</button>
+        </form>
+      </td>
+    </tr>
+    <tr class="align-middle">
+      <td class="text-center">
+        <a href="#">12345678978</a>
+      </td>
+      <td class="text-center">2023-04-01</td>
+      <td class="text-center">アナハイム・ファーム</td>
+      <td class="text-center">2021-04-02</td>
+      <td class="text-center">
+        <h5><span class="badge bg-warning">出荷指示残あり</span></h5>
+      </td>
+      <td class="text-center" >
+        <form method="post">
+          <button type="submit" class="btn btn-primary" th:name="reconcile" >出荷済として消し込む</button>
+        </form>
+      </td>
+    </tr>
+    <tr class="align-middle">
+      <td class="text-center">
+        <a href="#">12345678978</a>
+      </td>
+      <td class="text-center">2023-04-01</td>
+      <td class="text-center">アナハイム・ファーム</td>
+      <td class="text-center">2021-04-02</td>
+      <td class="text-center">
+        <h5><span class="badge bg-success">出荷指示済</span></h5>
       </td>
       <td class="text-center" >
         <form method="post">
@@ -106,77 +172,20 @@
         </form>
       </td>
     </tr>
-    <tr class="align-middle">
-      <td class="text-center">
-        <a href="#">12345678978</a>
-      </td>
-      <td class="text-center">2023-04-01</td>
-      <td class="text-center">アナハイム・ファーム</td>
-      <td class="text-center">2021-04-02</td>
-      <td class="text-center">
-        <h5><span class="badge bg-success">出荷指示済</span></h5>
-      </td>
-      <td class="text-center" >
-        <form method="post">
-          <button type="submit" class="btn btn-primary" th:name="reconcile" >出荷済として消し込む</button>
-        </form>
-      </td>
-    </tr>
-    <tr class="align-middle">
-      <td class="text-center">
-        <a href="#">12345678978</a>
-      </td>
-      <td class="text-center">2023-04-01</td>
-      <td class="text-center">アナハイム・ファーム</td>
-      <td class="text-center">2021-04-02</td>
-      <td class="text-center">
-        <h5><span class="badge bg-warning">出荷指示残あり</span></h5>
-      </td>
-      <td class="text-center" >
-        <form method="post">
-          <button type="submit" class="btn btn-primary" th:name="reconcile" >出荷済として消し込む</button>
-        </form>
-      </td>
-    </tr>
-    <tr class="align-middle">
-      <td class="text-center">
-        <a href="#">12345678978</a>
-      </td>
-      <td class="text-center">2023-04-01</td>
-      <td class="text-center">アナハイム・ファーム</td>
-      <td class="text-center">2021-04-02</td>
-      <td class="text-center">
-        <h5><span class="badge bg-warning">出荷指示残あり</span></h5>
-      </td>
-      <td class="text-center" >
-        <form method="post">
-          <button type="submit" class="btn btn-primary" th:name="reconcile" >出荷済として消し込む</button>
-        </form>
-      </td>
-    </tr>
-    <tr class="align-middle">
-      <td class="text-center">
-        <a href="#">12345678978</a>
-      </td>
-      <td class="text-center">2023-04-01</td>
-      <td class="text-center">アナハイム・ファーム</td>
-      <td class="text-center">2021-04-02</td>
-      <td class="text-center">
-        <h5><span class="badge bg-success">出荷指示済</span></h5>
-      </td>
-      <td class="text-center" >
-        <form method="post">
-          <button type="submit" class="btn btn-primary" th:name="reconcile" >出荷済として消し込む</button>
-        </form>
-      </td>
-    </tr>
+    */-->
     </tbody>
     <tfoot>
     </tfoot>
   </table>
 
   <a th:href="@{/shipping/search1}" class="btn btn-outline-primary">最初に戻る</a>
-  <a th:href="@{/shipping/search2}" class="btn btn-outline-primary">戻る</a>
+  <button class="btn btn-outline-primary" id="cancel" type="button">戻る</button>
 </div>
+
+<script>
+  document.getElementById("cancel").addEventListener("click", () => {
+    window.history.back();
+  })
+</script>
 </body>
 </html>

@@ -19,25 +19,25 @@
         <label for="sales-period" class="form-label">出荷指示日</label>
           <div class="input-group mb-3" id="sales-period">
             <label for="sales-period-from" class="form-label"></label>
-            <input type="date" class="form-control" id="sales-period-from">
+            <input class="form-control" id="sales-period-from" name="from" type="date">
             <span class="input-group-text">〜</span>
             <label for="sales-period-to" class="form-label"></label>
-            <input type="date" class="form-control" id="sales-period-to">
+            <input class="form-control" id="sales-period-to" name="to" type="date">
           </div>
         </div>
         <div class="col-md-4">
           <label for="region" class="form-label">届け先地域</label>
-          <select class="form-select" id="region" required>
+          <select class="form-select" id="region" name="shippingRegion" required>
             <option value="">Choose...</option>
-            <option>北海道</option>
-            <option>東北</option>
-            <option>関東</option>
-            <option>北陸</option>
-            <option>中部</option>
-            <option>近畿</option>
-            <option>中国</option>
-            <option>四国</option>
-            <option>九州</option>
+            <option value="北海道">北海道</option>
+            <option value="東北">東北</option>
+            <option value="関東">関東</option>
+            <option value="北陸">北陸</option>
+            <option value="中部">中部</option>
+            <option value="近畿">近畿</option>
+            <option value="中国">中国</option>
+            <option value="四国">四国</option>
+            <option value="九州">九州</option>
           </select>
         </div>
         <div class="col-md-1">

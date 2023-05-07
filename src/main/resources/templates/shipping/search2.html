@@ -17,13 +17,16 @@
       <table class="table">
         <tr>
           <th style="width: 30%">出荷指示日</th>
-          <td>2023-04-01</td>
+          <td><span th:text="${instructionCriteria.instructedDate}">2023-04-01 ~ 2023-04-02</span></td>
         </tr>
         <tr>
           <th>届け先地域</th>
-          <td>東北</td>
+          <td><span th:text="${instructionCriteria.shippingRegion}">東北</span></td>
         </tr>
       </table>
+      <input name="instructedFrom" type="hidden" value="${instructionCriteria.from}">
+      <input name="instructedTo" type="hidden" value="${instructionCriteria.to}">
+      <input name="shippingRegion" type="hidden" value="${instructionCriteria.shippingRegion}">
     </div>
     <div class="mb-3 row">
       <div>
@@ -34,15 +37,15 @@
         <label for="sales-period" class="form-label">出荷日</label>
           <div class="input-group mb-3" id="sales-period">
             <label for="shipping-date-from" class="form-label"></label>
-            <input type="date" class="form-control" id="shipping-date-from">
+            <input class="form-control" id="shipping-date-from" name="shippedFrom" type="date">
             <span class="input-group-text">〜</span>
             <label for="shipping-date-to" class="form-label"></label>
-            <input type="date" class="form-control" id="shipping-date-to">
+            <input class="form-control" id="shipping-date-to" name="shippedTo" type="date">
           </div>
         </div>
         <div class="col-md-4">
           <label for="region" class="form-label">出荷倉庫</label>
-          <select class="form-select" id="region" required>
+          <select class="form-select" id="region" name="wareHouse" required>
             <option value="">Choose...</option>
             <option>東日本倉庫</option>
             <option>中日本倉庫</option>
@@ -50,15 +53,21 @@
           </select>
         </div>
         <div class="col-md-1">
-          <label for="sales-order-search-button" class="form-label">&nbsp;</label>
+          <label class="form-label" for="shipping-search-button">&nbsp;</label>
           <div class="">
-            <button type="submit" class="btn btn-primary" name="q" id="sales-order-search-button">検索</button>
+            <button class="btn btn-primary" id="shipping-search-button" name="q" type="submit">検索</button>
           </div>
         </div>
       </div>
     </div>
   </form>
-  <a th:href="@{/shipping/search1}" class="btn btn-outline-primary">戻る</a>
+  <button class="btn btn-outline-primary" id="cancel" type="button">戻る</button>
 </div>
+
+<script>
+  document.getElementById("cancel").addEventListener("click", () => {
+    window.history.back();
+  })
+</script>
 </body>
 </html>
