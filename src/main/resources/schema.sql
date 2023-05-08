@@ -125,6 +125,53 @@ CREATE TABLE 販売.販売商品内容
 
 CREATE SEQUENCE 販売.販売商品コード START WITH 789012481 NO CYCLE;
 
+
+
+CREATE TABLE 販売.ジュエリー
+(
+    ジュエリーID  UUID        NOT NULL,
+    ジュエリーコード VARCHAR(10) NOT NULL,
+    PRIMARY KEY (ジュエリーID),
+    UNIQUE (ジュエリーコード),
+    作成日時 TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE 販売.ジュエリーリビジョン
+(
+    ジュエリーID  UUID      NOT NULL,
+    リビジョン    UUID      NOT NULL,
+    PRIMARY KEY (ジュエリーID, リビジョン),
+    FOREIGN KEY (ジュエリーID) REFERENCES 販売.ジュエリー (ジュエリーID),
+    作成日時 TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE 販売._現在のジュエリーリビジョン
+(
+    ジュエリーID  UUID      NOT NULL,
+    リビジョン    UUID      NOT NULL,
+    PRIMARY KEY (ジュエリーID, リビジョン),
+    FOREIGN KEY (ジュエリーID, リビジョン) REFERENCES 販売.ジュエリーリビジョン (ジュエリーID, リビジョン),
+    作成日時 TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE 販売.ジュエリー内容
+(
+    ジュエリーID    UUID          NOT NULL,
+    リビジョン      UUID          NOT NULL,
+    商品名称   VARCHAR(100)  NOT NULL,
+    商品略称   VARCHAR(50)   NOT NULL,
+    販売開始日 DATE          NOT NULL,
+    販売終了日 DATE          NOT NULL,
+    販売価格   NUMERIC(7)    NOT NULL,
+    定価       NUMERIC(7)    NOT NULL,
+    色         VARCHAR(5)    NOT NULL,
+    サイズ        VARCHAR(10)   NOT NULL,
+    説明       VARCHAR(1000) NOT NULL,
+    備考       VARCHAR(1000) NOT NULL,
+    PRIMARY KEY (ジュエリーID, リビジョン),
+    FOREIGN KEY (ジュエリーID, リビジョン) REFERENCES 販売.ジュエリーリビジョン (ジュエリーID, リビジョン),
+    作成日時   TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
 -- </editor-fold>
 
 -- <editor-fold desc="仕入スキーマ">

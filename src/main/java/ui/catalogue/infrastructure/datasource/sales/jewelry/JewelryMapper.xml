@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ui.catalogue.infrastructure.datasource.sales.jewelry.JewelryMapper">
+
+    <!--    <insert id="registerJewelry">-->
+    <!--        INSERT INTO 販売.ジュエリー (ジュエリーID, ジュエリーコード)-->
+    <!--        VALUES (#{jewelryId.value}, #{jewelryCode.value})-->
+    <!--    </insert>-->
+
+    <insert id="registerRevision">
+        INSERT INTO 販売.ジュエリーリビジョン (ジュエリーID, リビジョン)
+        VALUES (#{jewelryId.value}, #{revision})
+    </insert>
+
+    <insert id="registerJewelryContent">
+        INSERT INTO 販売.ジュエリー内容 (ジュエリーID, リビジョン, 商品名称, 商品略称, 販売開始日, 販売終了日, 販売価格, 定価, 色, サイズ, 説明, 備考)
+        VALUES (#{jewelryId.value},
+                #{revision},
+                #{jewelry.salesProductName.name},
+                #{jewelry.salesProductName.abbreviation},
+                #{jewelry.salesPeriod.from.value},
+                #{jewelry.salesPeriod.to.value},
+                #{jewelry.price.retailPrice.value},
+                #{jewelry.price.listPrice.value},
+                #{jewelry.color},
+                #{jewelry.size},
+                #{jewelry.description},
+                #{jewelry.remark})
+    </insert>
+
+    <insert id="registerActive">
+        INSERT INTO 販売._現在のジュエリーリビジョン (ジュエリーID, リビジョン)
+        VALUES (#{jewelryId.value}, #{revision})
+    </insert>
+
+    <delete id="deleteActive">
+        DELETE
+        FROM 販売._現在のジュエリーリビジョン
+        WHERE _現在のジュエリーリビジョン.ジュエリーID = #{jewelryId.value}
+    </delete>
+
+
+    <select id="summaries" resultType="ui.catalogue.domain.model.sales.jewelry.summary.JewelrySummary">
+        SELECT
+        ジュエリー.ジュエリーID AS "jewelryId.value",
+        ジュエリー.ジュエリーコード AS "jewelryCode.value",
+        ジュエリー内容.商品名称 AS "salesProductName.name",
+        ジュエリー内容.商品略称 AS "salesProductName.abbreviation",
+        ジュエリー内容.販売開始日 AS "salesPeriod.from.value",
+        ジュエリー内容.販売終了日 AS "salesPeriod.to.value"
+        FROM 販売.ジュエリー
+        INNER JOIN 販売.ジュエリーリビジョン ON ジュエリー.ジュエリーID = ジュエリーリビジョン.ジュエリーID
+        INNER JOIN 販売._現在のジュエリーリビジョン
+        ON ジュエリーリビジョン.ジュエリーID = _現在のジュエリーリビジョン.ジュエリーID
+        AND ジュエリーリビジョン.リビジョン = _現在のジュエリーリビジョン.リビジョン
+        INNER JOIN 販売.ジュエリー内容
+        ON ジュエリーリビジョン.ジュエリーID = ジュエリー内容.ジュエリーID
+        AND ジュエリーリビジョン.リビジョン = ジュエリー内容.リビジョン
+        <where>
+            (
+            ジュエリー内容.商品名称 LIKE CONCAT('%', #{criteria.name}, '%')
+            OR ジュエリー内容.商品略称 LIKE CONCAT('%', #{criteria.name}, '%')
+            )
+            <if test="!criteria.salesPeriod.from.isEmpty()">
+                <![CDATA[
+                  AND #{criteria.salesPeriod.from.value} <= ジュエリー内容.販売開始日
+                ]]>
+            </if>
+            <if test="!criteria.salesPeriod.to.isEmpty()">
+                <![CDATA[
+                  AND ジュエリー内容.販売終了日 <= #{criteria.salesPeriod.to.value}
+                ]]>
+            </if>
+        </where>
+    </select>
+
+    <select id="jewelryOf" resultType="ui.catalogue.domain.model.sales.jewelry.Jewelry">
+        SELECT ジュエリー.ジュエリーID,
+               ジュエリー.ジュエリーコード       AS "jewelryCode.value",
+               ジュエリー内容.商品名称   AS "salesProductName.name",
+               ジュエリー内容.商品略称   AS "salesProductName.abbreviation",
+               ジュエリー内容.販売開始日 AS "salesPeriod.from.value",
+               ジュエリー内容.販売終了日 AS "salesPeriod.to.value",
+               ジュエリー内容.販売価格   AS "price.retailPrice.value",
+               ジュエリー内容.定価       AS "price.listPrice.value",
+               ジュエリー内容.色         AS "color",
+               ジュエリー内容.サイズ        AS "size",
+               ジュエリー内容.説明       AS "description",
+               ジュエリー内容.備考       AS "remark"
+        FROM 販売.ジュエリー
+                 INNER JOIN 販売.ジュエリーリビジョン ON ジュエリー.ジュエリーID = ジュエリーリビジョン.ジュエリーID
+                 INNER JOIN 販売._現在のジュエリーリビジョン
+                            ON ジュエリーリビジョン.ジュエリーID = _現在のジュエリーリビジョン.ジュエリーID
+                                AND ジュエリーリビジョン.リビジョン = _現在のジュエリーリビジョン.リビジョン
+                 INNER JOIN 販売.ジュエリー内容
+                            ON ジュエリーリビジョン.ジュエリーID = ジュエリー内容.ジュエリーID
+                                AND ジュエリーリビジョン.リビジョン = ジュエリー内容.リビジョン
+        WHERE ジュエリー.ジュエリーID = #{jewelryId.value}
+    </select>
+
+    <select id="newSalesProductCode" resultType="long">
+        SELECT NEXTVAL('販売.ジュエリーコード')
+    </select>
+</mapper>

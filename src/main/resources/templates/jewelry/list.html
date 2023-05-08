@@ -19,21 +19,33 @@
       <th></th>
       <th>商品番号</th>
       <th>販売商品名</th>
-      <th>仕入先</th>
+      <th>販売期間</th>
     </tr>
     </thead>
     <tbody>
-    <tr class="align-middle">
+    <tr class="align-middle" th:each="summary: ${summaries.list}">
       <td class="text-center">
-        <a href="" th:href="@{/jewelries/7995319863}">
+        <a href="" th:href="@{|/jewelries/${summary.jewelryId}|}">
           <i class="bi bi-bag-plus" style="font-size: 1.5rem;"></i>
         </a>
       </td>
-      <td >
-        <a th:href="@{/jewelries/7995319863}">7995319863</a></td>
-      <td >ジュペレ　ジョーヌ １０Ｋ ライトゴールドカラー 白蝶パール スウィングピアス</td>
-      <td >有限会社山水</td>
+      <td>
+        <a th:href="@{|/jewelries/${summary.jewelryId}|}">
+          <span th:text="${summary.jewelryCode}">7995319863</span>
+        </a>
+      </td>
+      <td>
+        <span th:text="${summary.salesProductName.name}">
+          ジュペレ　ジョーヌ １０Ｋ ライトゴールドカラー 白蝶パール スウィングピアス
+        </span>
+      </td>
+      <td>
+        <span th:text="${summary.salesPeriod}">
+          2020-02-01〜2020-03-01
+        </span>
+      </td>
     </tr>
+    <!--/*
     <tr class="align-middle">
       <td class="text-center">
         <a href="" th:href="@{/customers/3425841047}">
@@ -100,6 +112,7 @@
       <td >エムイー・ブリランテ ダイヤモンド しずくデザイン スウィングフックピアス</td>
       <td >有限会社イズム</td>
     </tr>
+    */-->
     </tbody>
   </table>
 

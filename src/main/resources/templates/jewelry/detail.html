@@ -17,52 +17,57 @@
     <table class="table">
       <tr>
         <th style="width: 30%">販売商品名称</th>
-        <td>１４Ｋホワイトゴールド 国産アコヤパール スタッドピアス</td>
+        <td><span th:text="${jewelry.salesProductName.name}">１４Ｋホワイトゴールド 国産アコヤパール スタッドピアス</span></td>
       </tr>
       <tr>
         <th>販売商品略称</th>
-        <td>アコヤパール スタッドピアス</td>
+        <td><span th:text="${jewelry.salesProductName.abbreviation}">アコヤパール スタッドピアス</span></td>
       </tr>
       <tr>
         <th>販売期間</th>
-        <td>2023-04-12 〜 2023-04-30</td>
+        <td><span th:text="${jewelry.salesPeriod}">2023-04-12 〜 2023-04-30</span></td>
       </tr>
       <tr>
         <th>販売価格</th>
-        <td>66,980</td>
+        <td><span th:text="${jewelry.price.retailPrice}">66,980</span></td>
       </tr>
       <tr>
         <th>通常価格</th>
-        <td>96,800</td>
+        <td><span th:text="${jewelry.price.listPrice}">96,980</span></td>
       </tr>
       <tr>
         <th>色</th>
-        <td>白</td>
+        <td><span th:text="${jewelry.color}">白</span></td>
       </tr>
       <tr>
         <th>サイズ</th>
-        <td>L</td>
+        <td><span th:text="${jewelry.size}">L</span></td>
       </tr>
       <tr>
         <th>商品説明</th>
-        <td>思わず息を飲むシンプルかつ清楚な佇まい。強く輝く美しいテリがお顔周りをぱっと明るく演出。
+        <td><span th:text="${jewelry.description}">思わず息を飲むシンプルかつ清楚な佇まい。強く輝く美しいテリがお顔周りをぱっと明るく演出。</span>
         </td>
       </tr>
       <tr>
         <th>備考</th>
-        <td>セミラウンドシェイプの国産アコヤパールを１粒（片耳）あしらった、スタッドピアスです。
+        <td><span th:text="${jewelry.remark}">セミラウンドシェイプの国産アコヤパールを１粒（片耳）あしらった、スタッドピアスです。
           真珠専門の鑑別機関にて、強い真珠光沢（テリグレードＩ）との結果が出た、非常に上質で美しいパールを使用。
           ポストには１４Ｋホワイトゴールドを使用しました。
           シリコーンキャッチ付きです。
           定番のスタッドピアスはひとつ、お持ちいただくと重宝します。
-        </td>
+        </span></td>
       </tr>
 
 
     </table>
-    <a th:href="@{/jewelries/12323432/edit}" class="btn btn-primary">編集</a>
-    <a th:href="@{/jewelries}" class="btn btn-outline-primary">戻る</a>
+    <a class="btn btn-primary" th:href="@{|/jewelries/${jewelryId}/edit|}">編集</a>
+    <button class="btn btn-outline-primary" id="cancel" type="button">戻る</button>
   </div>
 </div>
+<script>
+  document.getElementById("cancel").addEventListener("click", () => {
+    window.history.back();
+  })
+</script>
 </body>
 </html>
