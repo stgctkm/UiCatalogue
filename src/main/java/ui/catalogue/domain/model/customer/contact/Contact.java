@@ -1,5 +1,7 @@
 package ui.catalogue.domain.model.customer.contact;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import ui.catalogue.domain.primitive.contact.address.Address;
 import ui.catalogue.domain.primitive.contact.phone.PhoneNumber;
 
@@ -7,10 +9,15 @@ import ui.catalogue.domain.primitive.contact.phone.PhoneNumber;
  * 連絡先
  */
 public class Contact {
+    @Valid
     Email email;
+    @Valid
     Address address;
+    @Valid
     PhoneNumber phoneNumber;
+    @NotBlank(message = "担当者名を入力してください")
     String personInCharge;
+    @NotBlank(message = "担当者部署を入力してください")
     String division;
 
     public Contact() {

@@ -2,6 +2,8 @@ package ui.catalogue.presentation.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -49,8 +51,12 @@ class CustomerController {
     }
 
     @PostMapping
-    String register(@ModelAttribute Customer customer,
+    String register(@Validated @ModelAttribute Customer customer,
+                    BindingResult result,
                     RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            return "customer/new";
+        }
         customerService.register(customer);
         redirectAttributes.addFlashAttribute("message", "顧客登録しました");
         return "redirect:/customers";
@@ -59,8 +65,12 @@ class CustomerController {
     @PutMapping("{customerId}")
     String update(
             @PathVariable CustomerId customerId,
-            @ModelAttribute Customer customer,
+            @Validated @ModelAttribute Customer customer,
+            BindingResult result,
             RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            return "customer/editor";
+        }
         customerService.update(customerId, customer);
         redirectAttributes.addFlashAttribute("message", "顧客更新しました");
         return "redirect:/customers";

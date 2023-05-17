@@ -1,5 +1,6 @@
 package ui.catalogue.domain.model.customer;
 
+import jakarta.validation.Valid;
 import ui.catalogue.domain.model.customer.contact.Contact;
 import ui.catalogue.domain.model.customer.identifier.CustomerName;
 import ui.catalogue.domain.model.customer.identifier.CustomerNumber;
@@ -9,7 +10,9 @@ import ui.catalogue.domain.model.customer.identifier.CustomerNumber;
  */
 public final class Customer {
     private final CustomerNumber customerNumber;
+    @Valid
     private final CustomerName customerName;
+    @Valid
     private final Contact contact;
 
     public Customer() {

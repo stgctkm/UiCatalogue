@@ -22,85 +22,104 @@
       <div class="row g-3 mb-3">
         <div class="col-sm-6">
           <label for="firstName" class="form-label">顧客名称</label>
-          <input type="text" class="form-control" id="firstName" placeholder="" value="株式会社東栄"
-                 required th:field="*{customerName.name}">
-          <div class="invalid-feedback">
-            Valid first name is required.
-          </div>
+          <input class="form-control" id="firstName" placeholder="" required
+                 th:classappend="${#fields.hasErrors('customerName.name*')}? 'is-invalid'"
+                 th:field="*{customerName.name}"
+                 type="text" value="">
+          <span class="invalid-feedback">
+            <span class="error" th:each="err : ${#fields.errors('customerName.name')}" th:text="${err}"></span>
+          </span>
         </div>
 
         <div class="col-sm-6">
           <label for="lastName" class="form-label">顧客名称カナ</label>
-          <input type="text" class="form-control" id="lastName" placeholder="" value="カブシキカイシャ トウエイ"
-                 required th:field="*{customerName.nameKana}">
-          <div class="invalid-feedback">
-            Valid last name is required.
-          </div>
+          <input class="form-control" id="lastName" placeholder="" required
+                 th:classappend="${#fields.hasErrors('customerName.nameKana*')}? 'is-invalid'"
+                 th:field="*{customerName.nameKana}"
+                 type="text" value="">
+          <span class="invalid-feedback">
+            <span class="error" th:each="err : ${#fields.errors('customerName.nameKana*')}" th:text="${err}"></span>
+          </span>
         </div>
 
         <div class="col-12">
           <label for="email" class="form-label">Email</label>
           <input class="form-control" id="email" placeholder="you@example.com" th:field="*{contact.email}"
-                 type="email"
-                 value="human-resource@toei.example.com"
-          >
-          <div class="invalid-feedback">
-            Please enter a valid email address for shipping updates.
-          </div>
+                 th:classappend="${#fields.hasErrors('contact.email*')}? 'is-invalid'"
+                 type="email">
+          <span class="invalid-feedback">
+            <span class="error" th:each="err : ${#fields.errors('contact.email*')}" th:text="${err}"></span>
+          </span>
         </div>
 
         <div class="col-md-3">
           <label for="zip" class="form-label">郵便番号</label>
-          <input type="text" class="form-control" id="zip" placeholder="" value="105-0004"
-                 required th:field="*{contact.address.postalCode}">
-          <div class="invalid-feedback">
-            Zip code required.
-          </div>
+          <input class="form-control" id="zip" placeholder="" required
+                 th:classappend="${#fields.hasErrors('contact.address.postalCode*')}? 'is-invalid'"
+                 th:field="*{contact.address.postalCode}" type="text">
+          <span class="invalid-feedback">
+            <span class="error" th:each="err : ${#fields.errors('contact.address.postalCode*')}"
+                  th:text="${err}"></span>
+          </span>
         </div>
 
         <div class="col-12">
           <label for="address" class="form-label">住所</label>
-          <input type="text" class="form-control" id="address" placeholder="市区町村" value="千代田区1-1-1"
-                 required th:field="*{contact.address.addressLine}">
-          <div class="invalid-feedback">
-            Please enter your shipping address.
-          </div>
+          <input class="form-control" id="address" placeholder="市区町村" required
+                 th:classappend="${#fields.hasErrors('contact.address.addressLine*')}? 'is-invalid'"
+                 th:field="*{contact.address.addressLine}" type="text">
+          <span class="invalid-feedback">
+            <span class="error" th:each="err : ${#fields.errors('contact.address.addressLine*')}"
+                  th:text="${err}"></span>
+          </span>
         </div>
 
         <div class="col-12">
           <label for="address2" class="form-label">住所 2 <span class="text-body-secondary">(Optional)</span></label>
-          <input type="text" class="form-control" id="address2" placeholder="建物名" value="ジオ701"
-                 th:field="*{contact.address.building}">
+          <input class="form-control" id="address2" placeholder="建物名"
+                 th:classappend="${#fields.hasErrors('contact.address.building*')}? 'is-invalid'"
+                 th:field="*{contact.address.building}"
+                 type="text">
+          <span class="invalid-feedback">
+            <span class="error" th:each="err : ${#fields.errors('contact.address.building*')}" th:text="${err}"></span>
+          </span>
         </div>
 
         <div class="col-md-4">
           <label for="telephone" class="form-label">電話番号</label>
-          <input type="text" class="form-control" id="telephone" placeholder="090-1111-1111" value="03-2505-3385"
-                 th:field="*{contact.phoneNumber}">
-          <div class="invalid-feedback">
-            電話番号を入力してください
-          </div>
+          <input class="form-control" id="telephone" placeholder="090-1111-1111"
+                 th:classappend="${#fields.hasErrors('contact.phoneNumber*')}? 'is-invalid'"
+                 th:field="*{contact.phoneNumber}"
+                 type="text">
+          <span class="invalid-feedback">
+            <span class="error" th:each="err : ${#fields.errors('contact.phoneNumber*')}" th:text="${err}"></span>
+          </span>
         </div>
 
         <div class="col-md-4">
           <label for="pic" class="form-label">担当者名</label>
-          <input type="text" class="form-control" id="pic" placeholder="杉本 賢雄" value="小此木 祐希"
-                 th:field="*{contact.personInCharge}">
-          <div class="invalid-feedback">
-            Please provide a valid 担当者名
-          </div>
+          <input class="form-control" id="pic" placeholder="杉本 賢雄"
+                 th:classappend="${#fields.hasErrors('contact.personInCharge*')}? 'is-invalid'"
+                 th:field="*{contact.personInCharge}"
+                 type="text">
+          <span class="invalid-feedback">
+            <span class="error" th:each="err : ${#fields.errors('contact.personInCharge*')}" th:text="${err}"></span>
+          </span>
         </div>
 
         <div class="col-md-4">
           <label for="division" class="form-label">担当部署</label>
-          <input type="text" class="form-control" id="division" placeholder="人事部" value="経営企画部"
-                 th:field="*{contact.division}">
-          <div class="invalid-feedback">
-            Please provide a valid 担当部署
-          </div>
+          <input class="form-control" id="division" placeholder="人事部"
+                 th:classappend="${#fields.hasErrors('contact.division*')}? 'is-invalid'"
+                 th:field="*{contact.division}"
+                 type="text">
+          <span class="invalid-feedback">
+            <span class="error" th:each="err : ${#fields.errors('contact.division*')}" th:text="${err}"></span>
+          </span>
         </div>
 
       </div>
+
       <a class="btn btn-outline-primary" th:href="@{/customers}">キャンセル</a>
       <button class="btn btn-primary" type="submit">保存</button>
     </form>
