@@ -28,14 +28,15 @@
         </div>
 
         <div class="col-sm-6">
-          <label class="form-label" for="abbreviation">販売商品名称カナ</label>
-          <input class="form-control" id="abbreviation" placeholder=""
-                 required th:classappend="${#fields.hasErrors('salesProductName.abbreviation*')}? 'is-invalid'"
+          <label class="form-label" for="abbreviation">販売商品略称</label>
+          <input class="form-control" id="abbreviation" placeholder="" required
+                 th:classappend="${#fields.hasErrors('salesProductName.abbreviation*')}? 'is-invalid'"
                  th:field="*{salesProductName.abbreviation}"
                  type="text"/>
           <span class="invalid-feedback" th:if="${#fields.hasErrors('salesProductName.abbreviation*')}">
             <span class="error" th:each="err : ${#fields.errors('salesProductName.abbreviation*')}"
-                  th:text="${err}"></span>
+                  th:text="${err}">
+            </span>
           </span>
         </div>
 
@@ -61,7 +62,6 @@
         <div class="row mt-3">
           <div class="col-md-3">
             <label class="form-label" for="price">販売価格</label>
-            <!--                   th:classappend="${#fields.hasErrors('price.retailPrice*')}? 'is-invalid'"-->
             <input class="form-control" id="price" placeholder="" required th:field="*{price.retailPrice}"
                    th:classappend="${#fields.hasErrors('price.validRetailPrice*') or #fields.hasErrors('price.retailPrice*')}? 'is-invalid'"
                    type="number"/>
@@ -108,7 +108,8 @@
 
         <div class="col-12">
           <label for="description" class="form-label">商品説明</label>
-          <textarea class="form-control" id="description" rows="3" th:classappend="${#fields.hasErrors('description*')}? 'is-invalid'"
+          <textarea class="form-control" id="description" rows="3"
+                    th:classappend="${#fields.hasErrors('description*')}? 'is-invalid'"
                     th:field="*{description}"
           >
           </textarea>
@@ -119,7 +120,8 @@
 
         <div class="col-12">
           <label for="remark" class="form-label">備考</label>
-          <textarea class="form-control" id="remark" rows="5" th:classappend="${#fields.hasErrors('remark*')}? 'is-invalid'"
+          <textarea class="form-control" id="remark" rows="5"
+                    th:classappend="${#fields.hasErrors('remark*')}? 'is-invalid'"
                     th:field="*{remark}"
           >
           </textarea>

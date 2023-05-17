@@ -69,8 +69,12 @@ public class SalesProductController {
     @PutMapping("{salesProductId}")
     String update(
             @PathVariable("salesProductId") SalesProductId salesProductId,
-            @ModelAttribute("salesProduct") SalesProduct salesProduct,
+            @Validated @ModelAttribute("salesProduct") SalesProduct salesProduct,
+            BindingResult result,
             RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            return "sales-product/editor";
+        }
         salesProductService.update(salesProductId, salesProduct);
         redirectAttributes.addFlashAttribute("message", "販売商品を更新しました");
         return "redirect:/sales-products";
