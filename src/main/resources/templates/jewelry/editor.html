@@ -19,21 +19,25 @@
         <div class="col-sm-6">
           <label class="form-label" for="name">販売商品名称</label>
           <input class="form-control" id="name" placeholder="" required th:field="${jewelry.salesProductName.name}"
+                 th:classappend="${#fields.hasErrors('salesProductName.name*')}? 'is-invalid'"
                  type="text"
                  value="１４Ｋホワイトゴールド 国産アコヤパール スタッドピアス">
-          <div class="invalid-feedback">
-            Valid first name is required.
-          </div>
+          <span class="invalid-feedback">
+            <span class="error" th:each="err : ${#fields.errors('salesProductName.name*')}" th:text="${err}"></span>
+          </span>
         </div>
 
         <div class="col-sm-6">
           <label class="form-label" for="abbreviation">販売商品略称</label>
-          <input class="form-control" id="abbreviation" placeholder="" required th:field="${jewelry.salesProductName.abbreviation}"
+          <input class="form-control" id="abbreviation" placeholder="" required
+                 th:classappend="${#fields.hasErrors('salesProductName.abbreviation*')}? 'is-invalid'"
+                 th:field="${jewelry.salesProductName.abbreviation}"
                  type="text"
                  value="アコヤパール スタッドピアス">
-          <div class="invalid-feedback">
-            Valid last name is required.
-          </div>
+          <span class="invalid-feedback">
+            <span class="error" th:each="err : ${#fields.errors('salesProductName.abbreviation*')}"
+                  th:text="${err}"></span>
+          </span>
         </div>
 
         <div class="row mt-3">
@@ -42,13 +46,19 @@
             <div class="input-group mb-3" id="sales-period">
               <label class="form-label" for="sales-period-from"></label>
               <input class="form-control" id="sales-period-from" th:field="${jewelry.salesPeriod.from}" type="date"
+                     th:classappend="${#fields.hasErrors('validSalesPeriod*')}? 'is-invalid'"
                      value="2023-04-12"
               >
               <span class="input-group-text">〜</span>
               <label class="form-label" for="sales-period-to"></label>
               <input class="form-control" id="sales-period-to" th:field="${jewelry.salesPeriod.to}" type="date"
+                     th:classappend="${#fields.hasErrors('validSalesPeriod*')}? 'is-invalid'"
                      value="2023-04-30"
               >
+              <span class="invalid-feedback">
+                <span class="error" th:each="err : ${#fields.errors('salesProductName.abbreviation*')}"
+                      th:text="${err}"></span>
+              </span>
             </div>
           </div>
         </div>
@@ -57,76 +67,82 @@
           <div class="col-md-3">
             <label class="form-label" for="price">販売価格</label>
             <input class="form-control" id="price" placeholder="" required th:field="*{price.retailPrice}"
+                   th:classappend="${#fields.hasErrors('price.validRetailPrice*') or #fields.hasErrors('price.retailPrice*')}? 'is-invalid'"
                    type="text"
                    value="159,980">
-            <div class="invalid-feedback">
-              販売価格 required.
-            </div>
+            <span class="invalid-feedback" th:if="${#fields.hasErrors('price.retailPrice*')}">
+              <span class="error" th:each="err : ${#fields.errors('price.retailPrice*')}" th:text="${err}"></span>
+            </span>
+            <span class="invalid-feedback" th:if="${#fields.hasErrors('price.validRetailPrice*')}">
+              <span class="error" th:each="err : ${#fields.errors('price.validRetailPrice*')}" th:text="${err}"></span>
+            </span>
           </div>
           <div class="col-md-3">
             <label class="form-label" for="normal-price">通常価格</label>
             <input class="form-control" id="normal-price" placeholder="" required th:field="*{price.listPrice}"
+                   th:classappend="${#fields.hasErrors('price.listPrice*')}? 'is-invalid'"
                    type="text"
                    value="316,800">
             <div class="invalid-feedback">
               通常価格 required.
             </div>
+            <span class="invalid-feedback">
+              <span class="error" th:each="err : ${#fields.errors('price.listPrice*')}" th:text="${err}"></span>
+            </span>
           </div>
         </div>
 
-        <!--/*
-                <div class="row mt-3">
-                <div class="col-md-3">
-                  <label for="price" class="form-label">販売価格</label>
-                  <input type="text" class="form-control" id="price" placeholder="" value="66,000"
-                         th:value="${jewelry.price.retailPrice}"
-                         required>
-                </div>
-                  <div class="col-md-3">
-                    <label for="normal-price" class="form-label">通常価格</label>
-                    <input type="text" class="form-control" id="normal-price" placeholder="" value="96,800"
-                           th:value="${jewelry.price.listPrice}"
-                           required>
-                  </div>
-                </div>
-
-            */-->
         <div class="row mt-3">
           <div class="col-md-5">
             <label for="color" class="form-label">色</label>
             <input class="form-control" id="color" placeholder="" required th:field="*{color}"
+                   th:classappend="${#fields.hasErrors('color*')}? 'is-invalid'"
                    type="text"
                    value="白">
+            <span class="invalid-feedback">
+              <span class="error" th:each="err : ${#fields.errors('color*')}" th:text="${err}"></span>
+            </span>
           </div>
 
           <div class="col-md-5">
             <label for="size" class="form-label">サイズ</label>
             <input class="form-control" id="size" placeholder="" required th:field="*{size}"
+                   th:classappend="${#fields.hasErrors('size*')}? 'is-invalid'"
                    type="text"
                    value="L">
+            <span class="invalid-feedback">
+              <span class="error" th:each="err : ${#fields.errors('size*')}" th:text="${err}"></span>
+            </span>
           </div>
 
         </div>
 
         <div class="col-12">
           <label for="description" class="form-label">商品説明</label>
-          <textarea class="form-control" id="description" rows="3" th:field="*{description}">
+          <textarea class="form-control" id="description" rows="3"
+                    th:classappend="${#fields.hasErrors('description*')}? 'is-invalid'"
+                    th:field="*{description}">
 思わず息を飲むシンプルかつ清楚な佇まい。強く輝く美しいテリがお顔周りをぱっと明るく演出。
           </textarea>
-          <div class="invalid-feedback">
-            商品説明を入力してください
-          </div>
+          <span class="invalid-feedback">
+            <span class="error" th:each="err : ${#fields.errors('description*')}" th:text="${err}"></span>
+          </span>
         </div>
 
         <div class="col-12">
           <label for="remark" class="form-label">備考</label>
-          <textarea class="form-control" id="remark" rows="5" th:field="*{remark}">
+          <textarea class="form-control" id="remark" rows="5"
+                    th:classappend="${#fields.hasErrors('remark*')}? 'is-invalid'"
+                    th:field="*{remark}">
 セミラウンドシェイプの国産アコヤパールを１粒（片耳）あしらった、スタッドピアスです。
 真珠専門の鑑別機関にて、強い真珠光沢（テリグレードＩ）との結果が出た、非常に上質で美しいパールを使用。
 ポストには１４Ｋホワイトゴールドを使用しました。
 シリコーンキャッチ付きです。
 定番のスタッドピアスは、ひとつお持ちいただくと重宝します。
           </textarea>
+          <span class="invalid-feedback">
+            <span class="error" th:each="err : ${#fields.errors('remark*')}" th:text="${err}"></span>
+          </span>
         </div>
 
       </div>

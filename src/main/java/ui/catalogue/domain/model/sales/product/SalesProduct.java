@@ -62,7 +62,6 @@ public class SalesProduct {
 
 
     boolean validSalesPeriod;
-
     @AssertTrue(message = "販売期間を正しく入力してください")
     boolean isValidSalesPeriod() {
         return salesPeriod.isValid();

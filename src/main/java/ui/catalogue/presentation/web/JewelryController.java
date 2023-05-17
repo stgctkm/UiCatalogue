@@ -2,6 +2,8 @@ package ui.catalogue.presentation.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import ui.catalogue.application.service.sales.jewelry.JewelryService;
@@ -49,8 +51,12 @@ class JewelryController {
     }
 
     @PutMapping("{jewelryId}")
-    String update(@ModelAttribute("jewelry") Jewelry jewelry,
+    String update(@Validated @ModelAttribute("jewelry") Jewelry jewelry,
+                  BindingResult result,
                   @PathVariable("jewelryId") JewelryId jewelryId) {
+        if (result.hasErrors()) {
+            return "jewelry/editor";
+        }
         jewelryService.update(jewelry, jewelryId);
         return "redirect:/jewelries/{jewelryId}";
     }

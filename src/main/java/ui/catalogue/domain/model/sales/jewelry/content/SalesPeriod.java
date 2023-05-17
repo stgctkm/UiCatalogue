@@ -30,4 +30,8 @@ public class SalesPeriod {
     public String toString() {
         return "%s 〜 %s".formatted(from, to);
     }
+
+    public boolean isValidOrder() {
+        return from.isBefore(to);
+    }
 }
