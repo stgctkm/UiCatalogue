@@ -21,4 +21,8 @@ public class SalesPeriod {
     public String toString() {
         return "%s 〜 %s".formatted(from, to);
     }
+
+    public boolean isValid() {
+        return from.isBefore(to);
+    }
 }

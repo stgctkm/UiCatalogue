@@ -17,23 +17,26 @@
           th:action="@{/sales-products}" th:method="post">
       <div class="row g-3 mb-3">
         <div class="col-sm-6">
-          <label for="firstName" class="form-label">販売商品名称</label>
-          <input class="form-control" id="firstName" placeholder="" required
+          <label class="form-label" for="salesProductName">販売商品名称</label>
+          <input class="form-control" id="salesProductName" placeholder="" required
+                 th:classappend="${#fields.hasErrors('salesProductName.name*')}? 'is-invalid'"
                  th:field="*{salesProductName.name}"
-                 type="text">
-          <div class="invalid-feedback">
-            Valid first name is required.
-          </div>
+                 type="text"/>
+          <span class="invalid-feedback" th:if="${#fields.hasErrors('salesProductName.name*')}">
+            <span class="error" th:each="err : ${#fields.errors('salesProductName.name*')}" th:text="${err}"></span>
+          </span>
         </div>
 
         <div class="col-sm-6">
-          <label for="lastName" class="form-label">販売商品名称カナ</label>
-          <input class="form-control" id="lastName" placeholder=""
-                 required
-                 th:field="*{salesProductName.abbreviation}" type="text">
-          <div class="invalid-feedback">
-            Valid last name is required.
-          </div>
+          <label class="form-label" for="abbreviation">販売商品名称カナ</label>
+          <input class="form-control" id="abbreviation" placeholder=""
+                 required th:classappend="${#fields.hasErrors('salesProductName.abbreviation*')}? 'is-invalid'"
+                 th:field="*{salesProductName.abbreviation}"
+                 type="text"/>
+          <span class="invalid-feedback" th:if="${#fields.hasErrors('salesProductName.abbreviation*')}">
+            <span class="error" th:each="err : ${#fields.errors('salesProductName.abbreviation*')}"
+                  th:text="${err}"></span>
+          </span>
         </div>
 
         <div class="row mt-3">
@@ -41,30 +44,42 @@
           <label for="sales-period" class="form-label">販売期間</label>
           <div class="input-group mb-3" id="sales-period">
             <label for="sales-period-from" class="form-label"></label>
-            <input class="form-control" id="sales-period-from" th:field="*{salesPeriod.from}" type="date"/>
+            <input class="form-control" id="sales-period-from" th:classappend="${#fields.hasErrors('validSalesPeriod*')}? 'is-invalid'" th:field="*{salesPeriod.from}"
+                   type="date"/>
             <span class="input-group-text">〜</span>
             <label for="sales-period-to" class="form-label"></label>
-            <input class="form-control" id="sales-period-to" th:field="*{salesPeriod.to}" type="date"/>
+            <input class="form-control" id="sales-period-to" th:classappend="${#fields.hasErrors('validSalesPeriod*')}? 'is-invalid'" th:field="*{salesPeriod.to}"
+                   type="date"/>
+            <span class="invalid-feedback" th:if="${#fields.hasErrors('validSalesPeriod*')}">
+              <span class="error" th:each="err : ${#fields.errors('validSalesPeriod*')}" th:text="${err}"></span>
+            </span>
           </div>
+
         </div>
         </div>
 
         <div class="row mt-3">
           <div class="col-md-3">
             <label class="form-label" for="price">販売価格</label>
+            <!--                   th:classappend="${#fields.hasErrors('price.retailPrice*')}? 'is-invalid'"-->
             <input class="form-control" id="price" placeholder="" required th:field="*{price.retailPrice}"
+                   th:classappend="${#fields.hasErrors('price.validRetailPrice*') or #fields.hasErrors('price.retailPrice*')}? 'is-invalid'"
                    type="number"/>
-            <div class="invalid-feedback">
-              販売価格 required.
-            </div>
+            <span class="invalid-feedback" th:if="${#fields.hasErrors('price.retailPrice*')}">
+              <span class="error" th:each="err : ${#fields.errors('price.retailPrice*')}" th:text="${err}"></span>
+            </span>
+            <span class="invalid-feedback" th:if="${#fields.hasErrors('price.validRetailPrice*')}">
+              <span class="error" th:each="err : ${#fields.errors('price.validRetailPrice*')}" th:text="${err}"></span>
+            </span>
           </div>
           <div class="col-md-3">
             <label for="normal-price" class="form-label">通常価格</label>
             <input class="form-control" id="normal-price" placeholder="" required th:field="*{price.listPrice}"
+                   th:classappend="${#fields.hasErrors('price.listPrice*')}? 'is-invalid'"
                    type="number"/>
-            <div class="invalid-feedback">
-              通常価格 required.
-            </div>
+            <span class="invalid-feedback" th:if="${#fields.hasErrors('price.listPrice*')}">
+              <span class="error" th:each="err : ${#fields.errors('price.listPrice*')}" th:text="${err}"></span>
+            </span>
           </div>
         </div>
 
@@ -72,30 +87,45 @@
           <div class="col-md-5">
             <label for="color" class="form-label">色</label>
             <input class="form-control" id="color" placeholder="" required th:field="*{color}"
+                   th:classappend="${#fields.hasErrors('color*')}? 'is-invalid'"
                    type="text"/>
+            <span class="invalid-feedback" th:if="${#fields.hasErrors('color*')}">
+              <span class="error" th:each="err : ${#fields.errors('color*')}" th:text="${err}"></span>
+            </span>
           </div>
 
           <div class="col-md-5">
             <label for="size" class="form-label">サイズ</label>
             <input class="form-control" id="size" placeholder="" required th:field="*{size}"
+                   th:classappend="${#fields.hasErrors('size*')}? 'is-invalid'"
                    type="text"/>
+            <span class="invalid-feedback" th:if="${#fields.hasErrors('size*')}">
+              <span class="error" th:each="err : ${#fields.errors('size*')}" th:text="${err}"></span>
+            </span>
           </div>
 
         </div>
 
         <div class="col-12">
           <label for="description" class="form-label">商品説明</label>
-          <textarea class="form-control" id="description" rows="3" th:field="*{description}">
+          <textarea class="form-control" id="description" rows="3" th:classappend="${#fields.hasErrors('description*')}? 'is-invalid'"
+                    th:field="*{description}"
+          >
           </textarea>
-          <div class="invalid-feedback">
-            商品説明を入力してください
-          </div>
+          <span class="invalid-feedback" th:if="${#fields.hasErrors('description*')}">
+            <span class="error" th:each="err : ${#fields.errors('description*')}" th:text="${err}"></span>
+          </span>
         </div>
 
         <div class="col-12">
           <label for="remark" class="form-label">備考</label>
-          <textarea class="form-control" id="remark" rows="5" th:field="*{remark}">
+          <textarea class="form-control" id="remark" rows="5" th:classappend="${#fields.hasErrors('remark*')}? 'is-invalid'"
+                    th:field="*{remark}"
+          >
           </textarea>
+          <span class="invalid-feedback" th:if="${#fields.hasErrors('remark*')}">
+            <span class="error" th:each="err : ${#fields.errors('remark*')}" th:text="${err}"></span>
+          </span>
         </div>
 
       </div>

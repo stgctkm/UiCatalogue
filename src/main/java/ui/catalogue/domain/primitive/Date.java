@@ -35,4 +35,8 @@ public class Date {
         return value.format(DateTimeFormatter.ofPattern("uuuu-MM-dd"));
     }
 
+    public boolean isBefore(Date other) {
+        if (value == null) return false;
+        return value.isBefore(other.value);
+    }
 }

@@ -2,6 +2,8 @@ package ui.catalogue.presentation.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -51,8 +53,14 @@ public class SalesProductController {
 
     @PostMapping
     String register(
-            @ModelAttribute("salesProduct") SalesProduct salesProduct,
+            @Validated @ModelAttribute("salesProduct") SalesProduct salesProduct,
+            BindingResult result,
             RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+            return "sales-product/new";
+        }
+
         salesProductService.register(salesProduct);
         redirectAttributes.addFlashAttribute("message", "販売商品を登録しました");
         return "redirect:/sales-products";
